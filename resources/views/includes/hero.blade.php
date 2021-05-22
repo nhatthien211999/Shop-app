@@ -8,7 +8,7 @@
                             <span>All departments</span>
                         </div>
                         <ul>
-                            <li><a href="#">Fresh Meat</a></li>
+                            {{-- <li><a href="#">Fresh Meat</a></li>
                             <li><a href="#">Vegetables</a></li>
                             <li><a href="#">Fruit & Nut Gifts</a></li>
                             <li><a href="#">Fresh Berries</a></li>
@@ -18,9 +18,15 @@
                             <li><a href="#">Fresh Onion</a></li>
                             <li><a href="#">Papayaya & Crisps</a></li>
                             <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
+                            <li><a href="#">Fresh Bananas</a></li> --}}
+
+                            @foreach ($menu as $value)
+                                <li><a href="#">{{$value->type}}</a></li>
+
+                            @endforeach
                         </ul>
                     </div>
+
                 </div>
                 <div class="col-lg-9">
                     <div class="hero__search">

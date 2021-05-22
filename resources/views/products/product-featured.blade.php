@@ -8,10 +8,19 @@
                     <div class="featured__controls">
                         <ul>
                             <li class="active" data-filter="*">All</li>
-                            <li data-filter=".oranges">Oranges</li>
+                            {{-- <li data-filter=".oranges">Oranges</li>
                             <li data-filter=".fresh-meat">Fresh Meat</li>
                             <li data-filter=".vegetables">Vegetables</li>
-                            <li data-filter=".fastfood">Fastfood</li>
+                            <li data-filter=".fastfood">Fastfood</li> --}}
+                            @foreach ($categories as $key=> $category)
+                                <li data-filter=".vegetables">{{$category->type}}</li>
+                                @if ($key==2)
+                                    @break
+
+                                @endif
+                            @endforeach
+
+
                         </ul>
                     </div>
                 </div>
