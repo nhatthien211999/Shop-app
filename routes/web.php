@@ -17,3 +17,32 @@ Route::get('/', function () {
     return view('content.content-home');
 });
 
+Route::get('/details', function () {
+    return view('content.content-details');
+});
+
+Route::get('/cart', function () {
+    return view('content.content-cart');
+});
+
+Route::get('/checkout', function () {
+    return view('content.content-checkout');
+});
+
+Route::get('/blog', function () {
+    return view('content.content-blog');
+});
+
+Route::get('/blogdetails', function () {
+    return view('content.content-blogdetails');
+});
+
+Route::get('/grid', function () {
+    return view('content.content-grid');
+});
+
+Route::get('/contact', function () {
+    return view('content.content-contact');
+});
+
+
