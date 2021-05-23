@@ -10,7 +10,7 @@
 
 <script>
     $(document).ready(function(){
-        console.log('aaaaaaaaaa')
+        // console.log('aaaaaaaaaa')
 
         $('.add-to-cart').click(function(){
             var id = $(this).data('id');
@@ -22,7 +22,7 @@
             var data = {'card_product_id': card_product_id,
                         'cart_product_name': cart_product_name,
                         'cart_product_image': cart_product_image,
-                        'cart_product_price': cart_product_price, 
+                        'cart_product_price': cart_product_price,
                         '_token': _token};
             $.ajax({
                 url: "{{ url('/add-to-cart') }}",
@@ -34,9 +34,9 @@
                 error: function (request, status, error) {
                     console.log(request.responseText);
                 }
-                
+
             })
         });
-        
+
     });
 </script>

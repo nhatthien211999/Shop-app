@@ -37,8 +37,11 @@ class ComposerServiceProvider extends ServiceProvider
         // You can use Closure based composers
         // which will be used to resolve any data
         // in this case we will pass menu items from database
-        // View::composer('includes.hero', function ($view) {
-        //     $view->with('menu', Category::all());
-        // });
+        View::composer('categories.category', function ($view) {
+            $view->with('categories', Category::all());
+        });
+        View::composer('includes.hero-details', function ($view) {
+            $view->with('categoriesHeroDetails', Category::all());
+        });
     }
 }

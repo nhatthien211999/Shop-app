@@ -34,7 +34,7 @@
 
     <!-- Js Plugins -->
     @include('includes.script_js')
-
+    @yield('js')
 
 </body>
 
