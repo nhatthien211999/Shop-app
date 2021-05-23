@@ -51,3 +51,8 @@ Route::get('/update-cart', [CartController::class, 'update']);
 
 Route::get('/delete/{session_id}', [CartController::class, 'destroy']);
 Route::get('/delete', [CartController::class, 'destroyAll']);
+
+Route::prefix('products')->namespace('Products')->name('products.')->middleware(['web', 'auth'])->group(function(){
+    Route::get('/{id}', [UserAccountController::class, 'index'])->name('dashboard');
+    
+});
