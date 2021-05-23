@@ -29,7 +29,20 @@
                 method: 'POST',
                 data: data,
                 success: function(data){
-                    alert("Thanh cong")
+                    $("#total").html(data['total']);
+                    $("#total_price").html(data['total_price']);
+                    swal({
+                        title: "Thêm vào giỏ hàng thành công",
+                        text: "Bạn có thể tiếp tục mua sắm hoặc đến giỏ hàng",
+                        type: "success",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Đi đến giỏ hàng",
+                        closeOnConfirm: false,
+                    },
+                    function(){
+                        window.location.href = "{{ url('/cart')}} "
+                    });
                 },
                 error: function (request, status, error) {
                     console.log(request.responseText);

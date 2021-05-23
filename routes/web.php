@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,7 +37,9 @@ Route::get('/blogdetails', function () {
     return view('content.content-blogdetails');
 });
 
-Route::get('/grid',  [ProductController::class, 'index']);
+Route::get('/grid', function () {
+    return view('content.content-grid');
+});
 
 Route::get('/contact', function () {
     return view('content.content-contact');
@@ -50,3 +51,8 @@ Route::get('/update-cart', [CartController::class, 'update']);
 
 Route::get('/delete/{session_id}', [CartController::class, 'destroy']);
 Route::get('/delete', [CartController::class, 'destroyAll']);
+
+Route::prefix('products')->namespace('Products')->name('products.')->middleware(['web', 'auth'])->group(function(){
+    Route::get('/{id}', [UserAccountController::class, 'index'])->name('dashboard');
+    
+});

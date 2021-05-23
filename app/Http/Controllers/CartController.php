@@ -17,9 +17,11 @@ class CartController extends Controller
         if($cart){
             $is_vaiable = 0;
             foreach($cart as $key => $val){
-                if($val['product_id'] == $data['card_product_id']){
-                    $is_vaiable++;
+                if($val['product_id'] == $data['card_product_id']){                   
+                    $is_vaiable++;    
+                    $cart[$key]['product_quantity']++;                
                 }
+                session()->put('cart', $cart);
             }
 
             if($is_vaiable == 0){
@@ -48,6 +50,20 @@ class CartController extends Controller
         }
         session()->put('cart', $cart);
         session()->save();
+
+        $total = 0;
+        $total_price = 0;
+        foreach($cart as $key => $val){
+            $total += $val['product_quantity'];
+            $total_price  += $val['product_price'] * $val['product_quantity'];
+        }
+
+        $data = [
+            'total' => $total,
+            'total_price' => $total_price 
+        ];
+
+        return $data;
     }
 
     function destroy($session_id){
@@ -75,18 +91,16 @@ class CartController extends Controller
     function update(Request $request){
         $data = $request->all();
         $cart = session()->get('cart');
-        if($cart){
+        if($cart == true){
             foreach($data['cart_quatity'] as $session_id => $val_quantity){
                 foreach($cart as $session => $val){
                     if($val['session_id'] == $session_id){
                         $cart[$session]['product_quantity'] = $val_quantity;
                     }
-                }
-
-                session()->put('cart', $cart);
-
-                return redirect()->back()->with('message', 'Cap nhap san pham thanh cong');
+                }              
             }
+            session()->put('cart', $cart);
+            return redirect()->back()->with('message', 'Cap nhap san pham thanh cong');
             
         }
         return redirect()->back()->with('message', 'Cap nhap san pham that bai');

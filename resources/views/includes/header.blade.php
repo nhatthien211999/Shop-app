@@ -64,14 +64,34 @@
                     <div class="header__cart">
                         <ul>
                             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="/cart"><i class="fa fa-shopping-bag"></i> 
-                                @if(session('cart') !== null)
-                                    <span>{{ count(session('cart')) }}</span>
-                                @endif
-                                
+                            <li><a href="/cart">
+                                <i class="fa fa-shopping-bag"></i> 
+                                <span id="total"><?php 
+                                    $total = 0;
+                                    $cart = session()->get('cart');
+                                    if($cart){
+                                        foreach($cart as $key => $val){
+                                            $total += $val['product_quantity'];
+                                        }
+                                    }
+                                    echo $total;
+                                ?></span>  
                             </a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <div class="header__cart__price">Price: 
+                            <span id="total_price">
+                            <?php
+                                $total = 0;
+                                $cart = session()->get('cart');
+                                if($cart){
+                                    foreach($cart as $key => $val){
+                                        $total += $val['product_price'] * $val['product_quantity'];
+                                    }
+                                }
+                                echo $total;
+                            ?>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
