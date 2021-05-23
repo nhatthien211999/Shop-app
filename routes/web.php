@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,4 +45,9 @@ Route::get('/contact', function () {
     return view('content.content-contact');
 });
 
+Route::post('/add-to-cart', [CartController::class, 'addCart']);
 
+Route::get('/update-cart', [CartController::class, 'update']);
+
+Route::get('/delete/{session_id}', [CartController::class, 'destroy']);
+Route::get('/delete', [CartController::class, 'destroyAll']);

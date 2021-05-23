@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index(){
         $categories = Category::all()->take(3);
 
-        $categoryID=null;
+        $categoryID=null;//bán chạy nhất
         foreach($categories as $value){
             if($categoryID==null)
                 $categoryID=array($value->id);
@@ -33,7 +33,6 @@ class HomeController extends Controller
         $productCollection=array();
 
         foreach($menu as $value){
-            var_dump($value->id);
             $products=Product::where('menu_id', $value->id)->paginate(1);
 
             if($productCollection==null){
