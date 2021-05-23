@@ -3,7 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,9 +37,7 @@ Route::get('/blogdetails', function () {
     return view('content.content-blogdetails');
 });
 
-Route::get('/grid', function () {
-    return view('content.content-grid');
-});
+Route::get('/grid',[ProductController::class, 'index']);
 
 Route::get('/contact', function () {
     return view('content.content-contact');
@@ -54,5 +52,5 @@ Route::get('/delete', [CartController::class, 'destroyAll']);
 
 Route::prefix('products')->namespace('Products')->name('products.')->middleware(['web', 'auth'])->group(function(){
     Route::get('/{id}', [UserAccountController::class, 'index'])->name('dashboard');
-    
+
 });

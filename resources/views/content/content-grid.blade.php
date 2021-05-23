@@ -410,12 +410,6 @@
             console.log(elProduct);
             $('.data_products').empty();
             $('.data_products').append(elProduct);
-
-
-
-
-
-
         }
 
 
