@@ -337,17 +337,26 @@
                         @foreach ($products as $item)
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
+                                    <form>
+
+                                        @csrf
+                                        <input type="hidden" value="{{$item->id}}" class="cart_product_id_{{$item->id}}">
+                                        <input type="hidden" value="{{$item->price}}" class="cart_product_price_{{$item->id}}">
+                                        <input type="hidden" value="{{$item->name}}" class="cart_product_name_{{$item->id}}">
+                                        <input type="hidden" value="{{$item->image}}" class="cart_product_image_{{$item->id}}">
+
                                     <div class="product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li><a href="#" class="add-to-cart" data-id="{{$item->id}}"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
-                                        <h6><a href="#">{{$item->name}}</a></h6>
+                                        <h6><a href="/products/{{$item->id}}">{{$item->name}}</a></h6>
                                         <h5>{{$item->price}}</h5>
                                     </div>
+                                </form>
                                 </div>
                             </div>
                         @endforeach
@@ -389,24 +398,30 @@
             console.log(listProducts.length);
             var QtyItem=listProducts.length;
             var elProduct=[];
-            for(var i=0; i< QtyItem; i++){
-                elProduct.push('<div class="col-lg-4 col-md-6 col-sm-6">\
-                                <div class="product__item">\
-                                    <div class="product__item__pic set-bg" data-setbg="">\
-                                        <ul class="product__item__pic__hover">\
-                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>\
-                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>\
-                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>\
-                                        </ul>\
-                                    </div>\
-                                    <div class="product__item__text">\
-                                        <h6><a href="#">'+listProducts[i].name+'</a></h6>\
-                                        <h5>'+listProducts[i].price+'</h5>\
-                                    </div>\
-                                </div>\
-                            </div>');
-
-            }
+            // for(var i=0; i< QtyItem; i++){
+            //     elProduct.push('<div class="col-lg-4 col-md-6 col-sm-6">\
+            //                     <div class="product__item">\
+            //                         <form>\
+            //                             @csrf\
+            //                             <input type="hidden" value="' + listProducts[i].id + '" class="cart_product_id_' + listProducts[i].id + '">\
+            //                             <input type="hidden" value="' + listProducts[i].price  +'" class="cart_product_price_' + listProducts[i].id  '">\
+            //                             <input type="hidden" value="' + listProducts[i].name + '" class="cart_product_name_' + listProducts[i].id  '">\
+            //                             <input type="hidden" value="' + listProducts[i].image +'" class="cart_product_image_' + listProducts[i].id  '">\
+            //                         <div class="product__item__pic set-bg" data-setbg="">\
+            //                             <ul class="product__item__pic__hover">\
+            //                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>\
+            //                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>\
+            //                                 <li><a href="#" class="add-to-cart" data-id="' + listProducts[i].id  +'"><i class="fa fa-shopping-cart"></i></a></li>\
+            //                             </ul>\
+            //                         </div>\
+            //                         <div class="product__item__text">\
+            //                             <h6><a href="/products/{{$item->id}}" >'+ listProducts[i].name+'</a></h6>\
+            //                             <h5>'+listProducts[i].price+'</h5>\
+            //                         </div>\
+            //                     </form>\
+            //                     </div>\
+            //                 </div>');
+            // }
             console.log(elProduct);
             $('.data_products').empty();
             $('.data_products').append(elProduct);

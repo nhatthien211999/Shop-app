@@ -10,7 +10,7 @@
 
 <script>
     $(document).ready(function(){
-        // console.log('aaaaaaaaaa')
+        console.log('aaaaaaaaaa')
 
         $('.add-to-cart').click(function(){
             var id = $(this).data('id');
@@ -18,11 +18,18 @@
             var cart_product_name = $('.cart_product_name_' + id).val();
             var cart_product_image = $('.cart_product_image_' + id).val();
             var cart_product_price = $('.cart_product_price_' + id).val();
+            var cart_product_quantity = $('.cart_product_quantity_' + id).val();
+
+            if(!cart_product_quantity){
+                cart_product_quantity = 1
+            }
+
             var _token = $('input[name="_token"]').val();
             var data = {'card_product_id': card_product_id,
                         'cart_product_name': cart_product_name,
                         'cart_product_image': cart_product_image,
                         'cart_product_price': cart_product_price,
+                        'cart_product_quantity': cart_product_quantity,
                         '_token': _token};
             $.ajax({
                 url: "{{ url('/add-to-cart') }}",

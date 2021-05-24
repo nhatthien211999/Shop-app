@@ -15,11 +15,20 @@ class CartController extends Controller
         $cart = session()->get('cart');
 
         if($cart){
+            //kiểm tra sản phẩm có trong giỏ hàng chưa ???
             $is_vaiable = 0;
             foreach($cart as $key => $val){
                 if($val['product_id'] == $data['card_product_id']){                   
-                    $is_vaiable++;    
-                    $cart[$key]['product_quantity']++;                
+                    $is_vaiable++;
+                    //kiểm tra số lượng sản phẩm người dùng thêm vào
+                    if($data['cart_product_quantity'] == 1){
+
+                        $cart[$key]['product_quantity']++;
+                            
+                    }else{
+                        $cart[$key]['product_quantity'] = $cart[$key]['product_quantity'] + $data['cart_product_quantity'];    
+                    }    
+                                
                 }
                 session()->put('cart', $cart);
             }
@@ -31,10 +40,11 @@ class CartController extends Controller
                     'product_name' => $data['cart_product_name'],
                     'product_image' => $data['cart_product_image'],
                     'product_price' => $data['cart_product_price'],
-                    'product_quantity' => 1,
+                    'product_quantity' => $data['cart_product_quantity'],
                     '_token' => $data['_token']
                 );
                 session()->put('cart', $cart);
+
             }
 
         }else{
@@ -44,7 +54,7 @@ class CartController extends Controller
                 'product_name' => $data['cart_product_name'],
                 'product_image' => $data['cart_product_image'],
                 'product_price' => $data['cart_product_price'],
-                'product_quantity' => 1,
+                'product_quantity' => $data['cart_product_quantity'],
                 '_token' => $data['_token']
             );
         }

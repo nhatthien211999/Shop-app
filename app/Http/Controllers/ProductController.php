@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    function show(Product $product){
-        dd($product);
+    function show($id){
+        $product = Product::find($id);
+        return view('content.content-details', compact('product'));
     }
     public function index(){
 
@@ -33,5 +34,6 @@ class ProductController extends Controller
         //return response()->json(compact('products'));
         //     }
     }
+
 
 }
