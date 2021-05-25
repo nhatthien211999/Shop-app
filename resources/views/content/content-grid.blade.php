@@ -347,12 +347,12 @@
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                            <li><a onclick="addCart({{$item->id}})"  ><i class="fa fa-shopping-cart" ></i></a></li>{{--class="add-to-cart"--}}
+                                            <li><a  href="#" class="add-to-cart" data-id="{{$item->id}}"><i class="fa fa-shopping-cart" ></i></a></li>{{--class="add-to-cart"--}}
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
                                         <h6><a href="/products/{{$item->id}}">{{$item->name}}</a></h6>
-                                        <h5>{{$item->price}}</h5>
+                                        <h5 class="jjj">{{$item->price}}</h5>
                                     </div>
                                
                                 </div>
@@ -380,6 +380,9 @@
             {
                 $('.num_page').append('<a  onclick="ChangePage('+i+')">'+i+'</a>');
             }
+            $(".jjj").on('click',function(){
+                console.log('hhhhhh');
+            })
         });
         function ChangePage(numberPage)//gọi api lấy dữ liệu các trang
         {
@@ -412,7 +415,7 @@
                                                 <ul class="product__item__pic__hover">\
                                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>\
                                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>\
-                                                    <li><a  onclick="addCart('+listProducts[i].id+')"><i class="fa fa-shopping-cart"></i></a></li>\
+                                                    <li><a  href="#" class="add-to-cart" data-id="' + listProducts[i].id +'"><i class="fa fa-shopping-cart"></i></a></li>\
                                                 </ul>\
                                             </div>\
                                             <div class="product__item__text">\
@@ -424,8 +427,8 @@
                                 </div>');
             }
             // console.log(elProduct);
-            $('.data_products').empty();
-            $('.data_products').append(elProduct);
+            //$('.data_products').empty();
+            $('.data_products').html(elProduct);
         }
           
     </script>
