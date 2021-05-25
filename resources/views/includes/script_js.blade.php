@@ -18,7 +18,7 @@
         var cart_product_image = $('.cart_product_image_' + id).val();
         var cart_product_price = $('.cart_product_price_' + id).val();
         var cart_product_quantity = $('.cart_product_quantity_' + id).val();
-        console.log(a);
+        console.log('a');
         if( !cart_product_quantity ){
             cart_product_quantity = 1
         }
