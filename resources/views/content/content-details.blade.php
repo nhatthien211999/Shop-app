@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
-                        <h3>{{$product->name}}</h3>
+                        <h3><a href="/products/{{$product->id}}" style="color: brown">{{$product->name}}</a></h3>
                         <div class="product__details__rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -66,7 +66,7 @@
                             <div class="product__details__quantity">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="text" value="1" class="cart_product_quantity_{{$product->id}}">
+                                        <input type="number" value="1" class="cart_product_quantity_{{$product->id}}">
                                     </div>
                                 </div>
                             </div>

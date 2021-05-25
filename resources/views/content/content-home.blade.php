@@ -76,8 +76,6 @@
         </div>
     </section>
 
-
-
     @include('includes.banner')
     @include('products.latest-product')
     @include('blog.blog')

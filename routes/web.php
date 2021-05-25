@@ -21,9 +21,7 @@ Route::get('/details', function () {
     return view('content.content-details');
 });
 
-Route::get('/cart', function () {
-    return view('content.content-cart');
-});
+
 
 Route::get('/checkout', function () {
     return view('content.content-checkout');
@@ -37,20 +35,28 @@ Route::get('/blogdetails', function () {
     return view('content.content-blogdetails');
 });
 
-Route::get('/grid',[ProductController::class, 'index']);
+// Route::get('/grid',[ProductController::class, 'index']);
 
 Route::get('/contact', function () {
     return view('content.content-contact');
 });
 
-Route::post('/add-to-cart', [CartController::class, 'addCart']);
+Route::get('/myshop', function () {
+    return view('content.content-myshop');
+});
 
-Route::get('/update-cart', [CartController::class, 'update']);
-
-Route::get('/delete/{session_id}', [CartController::class, 'destroy']);
-Route::get('/delete', [CartController::class, 'destroyAll']);
 
 Route::prefix('products')->namespace('Products')->name('products.')->group(function(){
     Route::get('/{id}', [ProductController::class, 'show'])->name('dashboard');
+    Route::get('/categories/{id}',[ProductController::class, 'index'])->name('category');
+});
 
+Route::prefix('carts')->namespace('Carts')->name('carts.')->group(function(){
+    Route::get('/cart', function () {
+        return view('content.content-cart');
+    })->name('view');
+    Route::post('/add-to-cart', [CartController::class, 'addCart']);
+    Route::get('/update-cart', [CartController::class, 'update']); 
+    Route::get('/delete/{session_id}', [CartController::class, 'destroy']);
+    Route::get('/delete', [CartController::class, 'destroyAll']);
 });

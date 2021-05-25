@@ -9,7 +9,7 @@
                     </div>
                     <ul>
                         @foreach ($categoriesHeroDetails as $item)
-                        <li><a href="#">{{$item->type}}</a></li>
+                            <li><a href="{{ route('products.category', $item->id) }}">{{$item->type}}</a></li>
 
                         @endforeach
 
