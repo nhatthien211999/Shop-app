@@ -387,7 +387,8 @@
         function ChangePage(numberPage)//gọi api lấy dữ liệu các trang
         {
             var listProducts;
-            $.ajax({url: "http://127.0.0.1:8000/api/grid",async: false,
+            $.ajax({url: "http://127.0.0.1:8000/api/grid",
+            async: false,
                 data:{
                     page: numberPage
                 },
@@ -429,6 +430,7 @@
             // console.log(elProduct);
             //$('.data_products').empty();
             $('.data_products').html(elProduct);
+
         }
           
     </script>
