@@ -1,15 +1,4 @@
-<script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.slicknav.js') }}"></script>
-<script src="{{ asset('assets/js/mixitup.min.js') }}"></script>
-<script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('assets/js/main.js') }}"></script>sweetalert.js
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="{{ asset('assets/js/sweetalert.js') }}"></script>
-
-<script>
-    $(document).ready(function(){
+$(document).ready(function(){
     //Shop Cart
     $('body').on('click', '.add-to-cart', function() {
         var id = $(this).data('id');
@@ -19,7 +8,7 @@
         var cart_product_price = $('.cart_product_price_' + id).val();
         var cart_product_quantity = $('.cart_product_quantity_' + id).val();
         
-        if( !cart_product_quantity ){
+        if(!cart_product_quantity){
             cart_product_quantity = 1
         }
 
@@ -31,7 +20,7 @@
                     'cart_product_quantity': cart_product_quantity,
                     '_token': _token};
         $.ajax({
-            url: "{{ url('carts/add-to-cart') }}",
+            url: "{{ url('/add-to-cart') }}",
             method: 'POST',
             data: data,
             success: function(data){
@@ -58,4 +47,3 @@
     });
 
 });
-</script>

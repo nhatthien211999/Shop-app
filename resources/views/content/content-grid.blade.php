@@ -57,72 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="sidebar__item sidebar__item__color--option">
-                            <h4>Colors</h4>
-                            <div class="sidebar__item__color sidebar__item__color--white">
-                                <label for="white">
-                                    White
-                                    <input type="radio" id="white">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__color sidebar__item__color--gray">
-                                <label for="gray">
-                                    Gray
-                                    <input type="radio" id="gray">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__color sidebar__item__color--red">
-                                <label for="red">
-                                    Red
-                                    <input type="radio" id="red">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__color sidebar__item__color--black">
-                                <label for="black">
-                                    Black
-                                    <input type="radio" id="black">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__color sidebar__item__color--blue">
-                                <label for="blue">
-                                    Blue
-                                    <input type="radio" id="blue">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__color sidebar__item__color--green">
-                                <label for="green">
-                                    Green
-                                    <input type="radio" id="green">
-                                </label>
-                            </div>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Popular Size</h4>
-                            <div class="sidebar__item__size">
-                                <label for="large">
-                                    Large
-                                    <input type="radio" id="large">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__size">
-                                <label for="medium">
-                                    Medium
-                                    <input type="radio" id="medium">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__size">
-                                <label for="small">
-                                    Small
-                                    <input type="radio" id="small">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__size">
-                                <label for="tiny">
-                                    Tiny
-                                    <input type="radio" id="tiny">
-                                </label>
-                            </div>
-                        </div>
+
                         <div class="sidebar__item">
                             <div class="latest-product__text">
                                 <h4>Latest Products</h4>
@@ -347,7 +282,7 @@
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                            <li><a onclick="addCart({{$item->id}})"  ><i class="fa fa-shopping-cart" ></i></a></li>{{--class="add-to-cart"--}}
+                                            <li><a href="#" class="add-to-cart" data-id="{{$item->id}}"  ><i class="fa fa-shopping-cart" ></i></a></li>{{--class="add-to-cart"--}}
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
@@ -361,10 +296,6 @@
 
                     </div>
                     <div class="product__pagination num_page">
-                        {{-- <a  onclick="ChangePage()">1</a>
-                        <button href="http://127.0.0.1:8000/grid?page=2">2</a>
-                        <a href="http://127.0.0.1:8000/grid?page=3">3</a> --}}
-                        {{-- <a href="#"><i class="fa fa-long-arrow-right"></i></a> --}}
                     </div>
                 </div>
             </div>
@@ -384,22 +315,20 @@
         function ChangePage(numberPage)//gọi api lấy dữ liệu các trang
         {
             var listProducts;
+            
             $.ajax({url: "http://127.0.0.1:8000/api/grid",async: false,
                 data:{
                     page: numberPage
                 },
                 type: "GET",
                 success: function(result){
-                    // console.log(result);
                     listProducts = result.products.data;
                 }
             });
 
-            // console.log(listProducts);
             var QtyItem=listProducts.length;
             var elProduct=[];
             for(var i=0; i< QtyItem; i++){
-                // console.log(lis)
                 elProduct.push('<div class="col-lg-4 col-md-6 col-sm-6">\
                                     <div class="product__item">\
                                         <form>\
@@ -412,7 +341,7 @@
                                                 <ul class="product__item__pic__hover">\
                                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>\
                                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>\
-                                                    <li><a  onclick="addCart('+listProducts[i].id+')"><i class="fa fa-shopping-cart"></i></a></li>\
+                                                    <li><a  href="#" class="add-to-cart" data-id="' + listProducts[i].id+ '"><i class="fa fa-shopping-cart"></i></a></li>\
                                                 </ul>\
                                             </div>\
                                             <div class="product__item__text">\

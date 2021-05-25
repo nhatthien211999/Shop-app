@@ -29,7 +29,7 @@
                         <x-alert/>
                     </div>
                     <div class="shoping__cart__table">
-                        <form action="{{ url('/update-cart') }}">
+                        <form action="{{ url('carts/update-cart') }}">
                             @csrf
                         <table>
                             <thead>
@@ -55,7 +55,7 @@
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input type="text" value="{{ $cart['product_quantity']}}" name="cart_quatity[{{ $cart['session_id'] }}]">
+                                                <input type="number" value="{{ $cart['product_quantity']}}" name="cart_quatity[{{ $cart['session_id'] }}]">
                                             </div>
                                         </div>
                                     </td>
@@ -64,7 +64,7 @@
                                     </td>
                                     <td class="shoping__cart__item__close">
                                         {{-- delete --}}
-                                        <a href="{{ url('/delete/'.$cart['session_id']) }}"><span  class="icon_close" style="color: red"} ></span></a>                                     
+                                        <a href="{{ url('carts/delete/'.$cart['session_id']) }}"><span  class="icon_close" style="color: red"} ></span></a>                                     
                                     </td>
                                 </tr>
 

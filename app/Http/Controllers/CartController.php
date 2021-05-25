@@ -20,15 +20,7 @@ class CartController extends Controller
             foreach($cart as $key => $val){
                 if($val['product_id'] == $data['card_product_id']){                   
                     $is_vaiable++;
-                    //kiểm tra số lượng sản phẩm người dùng thêm vào
-                    if($data['cart_product_quantity'] == 1){
-
-                        $cart[$key]['product_quantity']++;
-                            
-                    }else{
-                        $cart[$key]['product_quantity'] = $cart[$key]['product_quantity'] + $data['cart_product_quantity'];    
-                    }    
-                                
+                    $cart[$key]['product_quantity'] = $cart[$key]['product_quantity'] + $data['cart_product_quantity'];                               
                 }
                 session()->put('cart', $cart);
             }
