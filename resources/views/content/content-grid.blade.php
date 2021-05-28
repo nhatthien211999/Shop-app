@@ -289,13 +289,14 @@
                                         <h6><a href="/products/{{$item->id}}">{{$item->name}}</a></h6>
                                         <h5>{{$item->price}}</h5>
                                     </div>
-                               
+
                                 </div>
                             </div>
                         @endforeach
 
                     </div>
                     <div class="product__pagination num_page">
+                    {{--  --}}
                     </div>
                 </div>
             </div>
@@ -305,17 +306,54 @@
 @endsection
 @section('js')
     <script>
-
-        $(document).ready(function(){
-            for ( i = 1; i <= {{$products->lastPage()}}; i++)//tạo ra các paginate
+        var lastPage={{$products->lastPage()}};
+        var x=OutputPage(0);
+        // var listPage=
+        function OutputPage(numberPage){
+            if(numberPage==0)
             {
-                $('.num_page').append('<a  onclick="ChangePage('+i+')">'+i+'</a>');
+                var currentPage = {{$products->currentPage()}};
+
             }
-        });
+            else{
+                var currentPage = numberPage;
+            }
+
+            var elPage=[];
+            if( currentPage != 1)
+            {
+                elPage.push('<a  onclick="ChangePage('+ parseInt(currentPage - 1)  +')"> << </a>');
+            }
+
+            var displayPage;
+
+            if(lastPage>3)
+                displayPage=3;
+            if(lastPage<=3||lastPage>1)
+                displayPage=lastPage;
+
+            // console.log(displayPage);
+
+
+            for ( i = 0; i < displayPage; i++) //tạo ra các paginate {{$products->lastPage()}}
+            {
+
+                elPage.push('<a  onclick="ChangePage('+parseInt( currentPage  + i) +')">'+ parseInt(currentPage  + i)  +'</a>');
+                if(lastPage == numberPage + i)
+                break;
+            }
+            if( currentPage != lastPage)
+            {
+                elPage.push('<a  onclick="ChangePage('+parseInt( currentPage  +1)  +')"> >> </a>');
+            }
+            $('.num_page').html(elPage);
+            // result true;
+        }
+
         function ChangePage(numberPage)//gọi api lấy dữ liệu các trang
         {
             var listProducts;
-            
+
             $.ajax({url: "{{ url('api/grid') }}",
                 async: false,
                 data:{
@@ -346,7 +384,7 @@
                                                 </ul>\
                                             </div>\
                                             <div class="product__item__text">\
-                                                <h6><a href="/products/{{$item->id}}" >'+ listProducts[i].name+'</a></h6>\
+                                                <h6><a href="/products/'+listProducts[i].id+'" >'+ listProducts[i].name+'</a></h6>\
                                                 <h5 class="jjj">'+listProducts[i].price+'</h5>\
                                             </div>\
                                         </form>\
@@ -355,7 +393,8 @@
             }
 
             $('.data_products').html(elProduct);
+            OutputPage(numberPage);
         }
-          
+
     </script>
 @endsection

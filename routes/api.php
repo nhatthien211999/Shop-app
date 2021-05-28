@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ProductAPI;
+use App\Http\Controllers\API\HomeAPI;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/grid', [ProductAPI::class, 'index']);
+Route::get('/bestSell', [HomeAPI::class, 'BestSell']);

@@ -35,7 +35,8 @@ Route::get('/blogdetails', function () {
     return view('content.content-blogdetails');
 });
 
-// Route::get('/grid',[ProductController::class, 'index']);
+//Route::get('/grid',[ProductController::class, 'index']);
+//Route::get('/listProduct/{idCategory}',[ProductController::class, 'listProducts']);
 
 Route::get('/contact', function () {
     return view('content.content-contact');
@@ -47,8 +48,11 @@ Route::get('/myshop', function () {
 
 
 Route::prefix('products')->namespace('Products')->name('products.')->group(function(){
+    Route::get('/',[ProductController::class, 'index']);
     Route::get('/{id}', [ProductController::class, 'show'])->name('dashboard');
-    Route::get('/categories/{id}',[ProductController::class, 'index'])->name('category');
+    Route::get('/categories/{id}',[ProductController::class, 'listProducts'])->name('category');
+
+
 });
 
 Route::prefix('carts')->namespace('Carts')->name('carts.')->group(function(){
@@ -56,7 +60,11 @@ Route::prefix('carts')->namespace('Carts')->name('carts.')->group(function(){
         return view('content.content-cart');
     })->name('view');
     Route::post('/add-to-cart', [CartController::class, 'addCart']);
-    Route::get('/update-cart', [CartController::class, 'update']); 
+    Route::get('/update-cart', [CartController::class, 'update']);
     Route::get('/delete/{session_id}', [CartController::class, 'destroy']);
     Route::get('/delete', [CartController::class, 'destroyAll']);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

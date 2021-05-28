@@ -24,7 +24,7 @@
     <!-- Hero Section End -->
 
     <!-- Categories Section Begin -->
-    
+
     <!-- Categories Section End -->
 
     <!-- Featured Section Begin -->
@@ -40,7 +40,7 @@
     <!-- Latest Product Section End -->
 
     <!-- Blog Section Begin -->
- 
+
     <!-- Blog Section End -->
 
     <!-- Footer Section Begin -->
@@ -49,6 +49,7 @@
 
     <!-- Js Plugins -->
     @include('includes.script_js')
+    @yield('js')
 </body>
 
 </html>

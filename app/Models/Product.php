@@ -34,5 +34,9 @@ class Product extends Model
         return $this->hasMany(OrderDetail::class);
     }
     public function promotion(){}
+    public function getProductWithCategory($value)
+    {
+       return $this->menu->where('category_id',$value);
+    }
 
 }

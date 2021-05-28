@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Menu;
+
 
 class ProductController extends Controller
 {
@@ -12,27 +15,15 @@ class ProductController extends Controller
         return view('content.content-details', compact('product'));
     }
     public function index(){
+        $products = Controller::allProduct();
+        return view('content.content-grid', compact('products'));
+    }
+    public function listProducts($idCategory){
+        $menuID = Menu::where('category_id',$idCategory)->get('id');
 
-        // dd( Controller::ChangePage());
-        $products = Controller::ChangePage();
+        $products= Product::whereIn('menu_id',$menuID)->paginate(15);
 
-        //         // var_dump($paginator->count());
-        //     $urlCurrent =Route::current()->uri;
-
-        //    // var_dump($urlCurrent);
-        //     //dd();
-        //     $urlCurrent=parse_url($urlCurrent);
-        //     //dd($urlCurrent);
-        //     if($products->currentPage()!=1)
-        //     {
-
-            return view('content.content-grid', compact('products'));
-        //     }
-        //     else{
-
-
-        //return response()->json(compact('products'));
-        //     }
+        return view('content.content-grid', compact('products'));
     }
 
 
