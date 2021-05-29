@@ -64,8 +64,4 @@ class User extends Authenticatable
         return $this->hasOne(Shop::class);
     }
 
-
-
-
-
 }

@@ -1,12 +1,22 @@
+
 <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.slicknav.js') }}"></script>
 <script src="{{ asset('assets/js/mixitup.min.js') }}"></script>
 <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('assets/js/main.js') }}"></script>sweetalert.js
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
+{{-- GG Map  --}}
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdA7sj9iKytBL-jVsP4At0DJKBsbpamto&libraries=&v=weekly"
+    async
+></script>
+    
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
+
+
 
 <script>
     $(document).ready(function(){
@@ -54,7 +64,7 @@
                 console.log(request.responseText);
             }
 
-        })
+        })  
     });
 
 });

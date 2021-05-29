@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
 use App\Models\Category;
+use App\Models\Menu;
+use Illuminate\Support\Facades\Auth;
+
 class ComposerServiceProvider extends ServiceProvider
 {
     /**
@@ -42,6 +45,17 @@ class ComposerServiceProvider extends ServiceProvider
         });
         View::composer('includes.hero-details', function ($view) {
             $view->with('categoriesHeroDetails', Category::all());
+        });
+
+        View::composer('categories.category-menu', function ($view) {
+            $menus = '';
+
+            if(Auth::user()){
+                $menus = Menu::all()->where('shop_id', Auth::user()->shop->id);
+                $view->with('menus', $menus);
+            }
+
+            $view->with('menus', $menus);
         });
     }
 }

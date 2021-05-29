@@ -25,21 +25,9 @@
             <div class="row">
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
-                        <div class="sidebar__item">
-                            <h4>Department</h4>
-                            <ul>
-                                <li><a href="#">Fresh Meat</a></li>
-                                <li><a href="#">Vegetables</a></li>
-                                <li><a href="#">Fruit & Nut Gifts</a></li>
-                                <li><a href="#">Fresh Berries</a></li>
-                                <li><a href="#">Ocean Foods</a></li>
-                                <li><a href="#">Butter & Eggs</a></li>
-                                <li><a href="#">Fastfood</a></li>
-                                <li><a href="#">Fresh Onion</a></li>
-                                <li><a href="#">Papayaya & Crisps</a></li>
-                                <li><a href="#">Oatmeal</a></li>
-                            </ul>
-                        </div>
+
+                        @include('categories.category-menu')
+
                         <div class="sidebar__item">
                             <h4>Price</h4>
                             <div class="price-range-wrap">
@@ -87,36 +75,71 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="row data_products">
-
-                        {{-- @foreach ($products as $item)
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item" >
-                                  @csrf
-                                    <input type="hidden" value="{{$item->id}}" class="cart_product_id_{{$item->id}}">
-                                    <input type="hidden" value="{{$item->price}}" class="cart_product_price_{{$item->id}}">
-                                    <input type="hidden" value="{{$item->name}}" class="cart_product_name_{{$item->id}}">
-                                    <input type="hidden" value="{{$item->image}}" class="cart_product_image_{{$item->id}}">
-
-                                    <div class="product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
-                                        <ul class="product__item__pic__hover">
-                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                            <li><a href="#" class="add-to-cart" data-id="{{$item->id}}"  ><i class="fa fa-shopping-cart" ></i></a></li>
-                                        </ul>
+                    <x-alert/>
+                    @if (Auth::user())
+                        
+                        @if (!empty(Auth::user()->shop->id))
+                            <div>                               
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-5">
+                                        <div class="filter__sort">
+                                            <h6><a href="{{route('menus.create')}}" class="btn btn-success">Tao MENU</a></h6>
+                                        </div>
                                     </div>
-                                    
-                                    <div class="product__item__text">
-                                        <h6><a href="/products/{{$item->id}}">{{$item->name}}</a></h6>
-                                        <h5>{{$item->price}}</h5>
-                                    </div>
-                               
+                                    @if (count(Auth::user()->shop->menu) > 0)
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="filter__found">
+                                                <h6><a href="{{route('products.create')}}" class="btn btn-warning">Them SP</a></h6>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div> 
+                                <div class="product__discount">
+
                                 </div>
-                            </div>
-                        @endforeach --}}
+                                <div class="row data_products" >
+                                    {{-- @foreach ($products as $item)
+                                        <div class="col-lg-4 col-md-6 col-sm-6">
+                                            <div class="product__item" >
+                                            @csrf
+                                                <input type="hidden" value="{{$item->id}}" class="cart_product_id_{{$item->id}}">
+                                                <input type="hidden" value="{{$item->price}}" class="cart_product_price_{{$item->id}}">
+                                                <input type="hidden" value="{{$item->name}}" class="cart_product_name_{{$item->id}}">
+                                                <input type="hidden" value="{{$item->image}}" class="cart_product_image_{{$item->id}}">
 
-                    </div>
+                                                <div class="product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
+                                                    <ul class="product__item__pic__hover">
+                                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                                        <li><a href="#" class="add-to-cart" data-id="{{$item->id}}"  ><i class="fa fa-shopping-cart" ></i></a></li>
+                                                    </ul>
+                                                </div>
+                                                
+                                                <div class="product__item__text">
+                                                    <h6><a href="/products/{{$item->id}}">{{$item->name}}</a></h6>
+                                                    <h5>{{$item->price}}</h5>
+                                                </div>
+                                        
+                                            </div>
+                                        </div>
+                                    @endforeach --}}
+
+                                </div>
+                        @else
+                            <div class="row" >
+                                <form action="{{route('shops.create', Auth::user()->id)}}">
+                                    @csrf
+                                    <input type="submit" style="color: red" value="Create Shop">
+                                </form>
+                            </div>
+                        @endif
+                    @else
+                        <div>
+                            <a href="{{route('login')}}">Login</a>
+                        </div>
+                    @endif
+
+
                     <div class="product__pagination num_page">
                     </div>
 
