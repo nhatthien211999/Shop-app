@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
+
+use App\Http\Controllers\Controller;
+use App\Models\Menu;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -23,6 +28,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $categoryID = Category::all('id')->take(3);
+        $categories=Category::whereIn('id',$categoryID)->get();
+        $menu=Menu::whereIn('category_id',$categoryID);
+        //dd($menu->get());
+        $productCollection=Product::whereIn('menu_id',$menu->get('id'))->paginate(8);
+        $menu=$menu->get();
+        // dd($menu);
+        //return response()->json(array('productCollection'=>$productCollection ,'menu'=>$menu),200);
+        return view('content.content-home', compact('menu', 'categories','productCollection'));
     }
 }
