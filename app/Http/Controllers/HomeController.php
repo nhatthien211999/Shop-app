@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use App\Models\Category;
@@ -18,7 +19,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -37,5 +38,9 @@ class HomeController extends Controller
         // dd($menu);
         //return response()->json(array('productCollection'=>$productCollection ,'menu'=>$menu),200);
         return view('content.content-home', compact('menu', 'categories','productCollection'));
+        //return view('home');
+    }
+    public function home() {
+        return view('home');
     }
 }
