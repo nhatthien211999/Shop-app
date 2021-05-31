@@ -86,18 +86,22 @@
                                             <h6><a href="{{route('menus.create')}}" class="btn btn-success">Tao MENU</a></h6>
                                         </div>
                                     </div>
+
+
                                     @if (count(Auth::user()->shop->menu) > 0)
                                         <div class="col-lg-4 col-md-4">
                                             <div class="filter__found">
                                                 <h6><a href="{{route('products.create')}}" class="btn btn-warning">Them SP</a></h6>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-3">
-                                            <div class="filter__option">
-                                                <h6><a href="/map" class="btn btn-success">Map</a></h6>
-                                            </div>
-                                        </div>
+
                                     @endif
+
+                                    <div class="col-lg-4 col-md-3">
+                                        <div class="filter__option">
+                                            <h6><a href="/map" class="btn btn-success">Map</a></h6>
+                                        </div>
+                                    </div>
                                 </div> 
                                 <div class="product__discount">
 

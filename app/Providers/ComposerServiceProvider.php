@@ -50,7 +50,7 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer('categories.category-menu', function ($view) {
             $menus = '';
 
-            if(Auth::user()){
+            if(Auth::user()->shop){
                 $menus = Menu::all()->where('shop_id', Auth::user()->shop->id);
                 $view->with('menus', $menus);
             }

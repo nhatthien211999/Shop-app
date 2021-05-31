@@ -35,7 +35,9 @@ class ShopController extends Controller
                 'user_id' => $user_id,
                 'background' => $filename,
                 'status' => 'active',
-                'address' => $request->input('address')
+                'address' => $request->input('address'),
+                'latitude' => $request->input('latitude'),
+                'longitude' => $request->input('longitude'),
                 ]);
         }
         else
@@ -45,13 +47,15 @@ class ShopController extends Controller
                 'user_id' => $user_id,
                 'background' => '/',
                 'status' => 'active',
-                'address' => $request->input('address')
+                'address' => $request->input('address'),
+                'latitude' => $request->input('latitude'),
+                'longitude' => $request->input('longitude'),
                 ]);
         }
 
         if($shop){
-            return redirect(route('menus.index'))->with('message', 'Tao shop thanh cong');
+            return redirect(route('menus.create'))->with('message', 'Tao shop thanh cong');
         }
-        return redirect(route('menus.index'))->with('message', 'Tao shop that bai');
+        return redirect()->back()->with('message', 'Tao shop that bai');
     }
 }

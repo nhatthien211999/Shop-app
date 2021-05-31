@@ -73,7 +73,16 @@
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a href="/">Home</a></li>
-                            <li><a href="{{route('menus.index', ['id' => Auth::user() ? Auth::user()->id : null])}}">Shop</a></li>
+                            @if (Auth::user())
+                                @if(Auth::user()->shop)
+                                    <li><a href="{{route('menus.index', ['id' => Auth::user() ? Auth::user()->id : null])}}">Shop</a></li>   
+                                @else
+                                    <li><a href="{{route('shops.create')}}">Shop</a></li>
+                                @endif
+                            @else 
+                                <li><a href="{{route('login')}}">Shop</a></li>
+                            @endif
+
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="./shop-details.html">Shop Details</a></li>

@@ -17,12 +17,14 @@ class MenuController extends Controller
     }
 
     function index($id = null){
-        
+        $products = [];
         if($id != null){
             $shop = Auth::user()->shop;
-            $menus = Menu::where('shop_id', $shop->id)->get('id');
-            $products = Product::whereIn('menu_id', $menus)->paginate(9);  
-
+            
+            if($shop){
+                $menus = Menu::where('shop_id', $shop->id)->get('id');
+                $products = Product::whereIn('menu_id', $menus)->paginate(9);  
+            }
             return view('content.content-myshop', compact('products'));  
               
         }

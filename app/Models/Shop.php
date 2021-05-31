@@ -14,7 +14,9 @@ class Shop extends Model
     'user_id',
     'background',
     'status',
-    'address'
+    'address',
+    'latitude',
+    'longitude'
   ];
   public function user(){
     return $this->belongsTo(User::class);
