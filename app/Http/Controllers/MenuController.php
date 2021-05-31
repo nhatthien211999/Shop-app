@@ -3,15 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Menu;
+use App\Models\Product;
 
 class MenuController extends Controller
 {
-    function index(){
+
+    public function __construct()
+    {
+        $this->middleware('auth')->only('index');
+    }
+
+    function index($id = null){
         
-        return view('content.content-myshop');
+        if($id != null){
+            $shop = Auth::user()->shop;
+            $menus = Menu::where('shop_id', $shop->id)->get('id');
+            $products = Product::whereIn('menu_id', $menus)->paginate(9);  
+
+            return view('content.content-myshop', compact('products'));  
+              
+        }
+        return view('content.content-myshop', compact('products'));
     }
 
     function create()

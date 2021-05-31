@@ -40,6 +40,7 @@ class HomeController extends Controller
         return view('content.content-home', compact('menu', 'categories','productCollection'));
         //return view('home');
     }
+    
     public function home() {
         return view('home');
     }

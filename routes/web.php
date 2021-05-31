@@ -21,11 +21,7 @@ use App\Http\Controllers\ShopController;
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/map-js', function () {
-    $districts=Location::pluck('district','district');
 
-    return view('front',compact('districts'));
-});
 
 Auth::routes();
 
@@ -60,7 +56,7 @@ Route::prefix('shops')->namespace('Shops')->name('shops.')->group(function(){
 
 Route::prefix('menus')->namespace('Menus')->name('menus.')->group(function(){
 
-    Route::get('/myshop', [MenuController::class, 'index'])->name('index');
+    Route::get('/myshop/{id?}', [MenuController::class, 'index'])->name('index');
 
     Route::get('/create',[MenuController::class, 'create'])->name('create');
 
@@ -88,6 +84,8 @@ Route::prefix('carts')->namespace('Carts')->name('carts.')->group(function(){
     Route::get('/delete/{session_id}', [CartController::class, 'destroy']);
     Route::get('/delete', [CartController::class, 'destroyAll']);
 });
+
+Route::get('/my-shop/{id}', [ShopController::class, 'categoryProduct'])->name('showProductOfCategory');
 
 
 

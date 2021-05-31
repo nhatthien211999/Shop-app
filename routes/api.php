@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ProductAPI;
 use App\Http\Controllers\API\HomeAPI;
+use App\Http\Controllers\ShopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/grid', [ProductAPI::class, 'index']);
+
+Route::POST('/my-shop', [ProductAPI::class, 'myShop']);
+
 Route::get('/bestSell', [HomeAPI::class, 'BestSell']);
+
+Route::POST('/my-shop-category-product', [ProductAPI::class, 'myShopProductCategory']);
+
+
 
 

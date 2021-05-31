@@ -102,34 +102,36 @@
                                 <div class="product__discount">
 
                                 </div>
-                                <div class="row data_products" >
-                                    @foreach ($products as $item)
-                                        <div class="col-lg-4 col-md-6 col-sm-6">
-                                            <div class="product__item" >
-                                            @csrf
-                                                <input type="hidden" value="{{$item->id}}" class="cart_product_id_{{$item->id}}">
-                                                <input type="hidden" value="{{$item->price}}" class="cart_product_price_{{$item->id}}">
-                                                <input type="hidden" value="{{$item->name}}" class="cart_product_name_{{$item->id}}">
-                                                <input type="hidden" value="{{$item->image}}" class="cart_product_image_{{$item->id}}">
+                                @if ($products)                                
+                                    <div class="row data_products" >
+                                        @foreach ($products as $item)
+                                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                                <div class="product__item" >
+                                                @csrf
+                                                    <input type="hidden" value="{{$item->id}}" class="cart_product_id_{{$item->id}}">
+                                                    <input type="hidden" value="{{$item->price}}" class="cart_product_price_{{$item->id}}">
+                                                    <input type="hidden" value="{{$item->name}}" class="cart_product_name_{{$item->id}}">
+                                                    <input type="hidden" value="{{$item->image}}" class="cart_product_image_{{$item->id}}">
 
-                                                <div class="product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
-                                                    <ul class="product__item__pic__hover">
-                                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" class="add-to-cart" data-id="{{$item->id}}"  ><i class="fa fa-shopping-cart" ></i></a></li>
-                                                    </ul>
+                                                    <div class="product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
+                                                        <ul class="product__item__pic__hover">
+                                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                                            <li><a href="#" class="add-to-cart" data-id="{{$item->id}}"  ><i class="fa fa-shopping-cart" ></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                    
+                                                    <div class="product__item__text">
+                                                        <h6><a href="/products/{{$item->id}}">{{$item->name}}</a></h6>
+                                                        <h5>{{$item->price}}</h5>
+                                                    </div>
+                                            
                                                 </div>
-                                                
-                                                <div class="product__item__text">
-                                                    <h6><a href="/products/{{$item->id}}">{{$item->name}}</a></h6>
-                                                    <h5>{{$item->price}}</h5>
-                                                </div>
-                                        
                                             </div>
-                                        </div>
-                                    @endforeach
-
-                                </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                                
                         @else
                             <div class="row" >
                                 <form action="{{route('shops.create', Auth::user()->id)}}">
@@ -147,7 +149,7 @@
 
                     <div class="product__pagination num_page">
                     </div>
-
+                    <br>
                     <div class="section-title product__discount__title">
                         <h2>Sale Off</h2>
                     </div>
@@ -320,16 +322,16 @@
         {
             var listProducts;
 
-            $.ajax({url: "{{ url('api/my-shop') }}",
+            $.ajax({url: "{{ url('api/my-shop-category-product') }}",
                 async: false,
                 data:{
-                    {{ $products->getPageName() }}: numberPage,
-                    shopID: {{Auth::user()->shop->id}}
+                    page: numberPage,
+                    menuID: {{$menu_id}}
                 },
                 type: "POST",
                 success: function(result){
                     listProducts = result.products.data;
-                    console.log(listProducts);
+                    console.log(numberPage);
                 }
             });
 

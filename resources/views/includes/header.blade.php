@@ -73,7 +73,7 @@
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a href="/">Home</a></li>
-                            <li><a href="{{route('menus.index')}}">Shop</a></li>
+                            <li><a href="{{route('menus.index', ['id' => Auth::user() ? Auth::user()->id : null])}}">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="./shop-details.html">Shop Details</a></li>

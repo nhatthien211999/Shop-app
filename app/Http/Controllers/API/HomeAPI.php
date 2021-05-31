@@ -16,7 +16,7 @@ class HomeAPI extends Controller
         $categoryID = Category::all('id')->take(3);
         // $categories=Category::whereIn('id',$categoryID)->get();
         $menu=Menu::whereIn('category_id',$categoryID);
-        //dd($menu->get());
+        // dd($menu->get());
         $productCollection=Product::whereIn('menu_id',$menu->get('id'))->paginate(8);
         $menu=$menu->get();
         // dd($menu);
