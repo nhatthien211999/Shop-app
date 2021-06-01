@@ -12,11 +12,11 @@
         <div class="form-group">
             <label for="latitude">Latitude:</label>
             <br>
-            <input value="{{ Auth::user()->shop->latitude }}" name="latitude" readonly/>
+            <input value="{{ $shop->latitude }}" name="latitude" readonly/>
             <br>
             <label for="longitude">Longitude:</label>
             <br>
-            <input value="{{ Auth::user()->shop->longitude }}" name="longitude" readonly/>
+            <input value="{{ $shop->longitude }}" name="longitude" readonly/>
         </div>
         </form>
     </div>
@@ -43,8 +43,8 @@
         }
 
         function success(position) {
-            var latval = {{ Auth::user()->shop->latitude }};
-            var lngval = {{ Auth::user()->shop->longitude }};
+            var latval = {{ $shop->latitude }};
+            var lngval = {{ $shop->longitude }};
             myLatLng = new google.maps.LatLng(latval, lngval);
             createMap(myLatLng);
         }

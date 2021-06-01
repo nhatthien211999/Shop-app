@@ -99,7 +99,7 @@
 
                                     <div class="col-lg-4 col-md-3">
                                         <div class="filter__option">
-                                            <h6><a href="/map" class="btn btn-success">Map</a></h6>
+                                            <h6><a href="{{route('mapShop', ['id' =>  Auth::user()->shop->id])}}" class="btn btn-success">Map</a></h6>
                                         </div>
                                     </div>
                                 </div> 

@@ -9,13 +9,50 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Menu;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
+
 class ShopController extends Controller
 {
-    function categoryProduct($menu_id){
 
-        $products = Product::where('menu_id', $menu_id)->paginate(9);      
+    public function index(){
+
+        $shops = DB::table('shops')->paginate(8);
+
+        return view('content.content-grid-shop', compact('shops'));
+    }
+
+    public function categoryProduct($menu_id){
+
+        $products = Product::where('menu_id', $menu_id)->paginate(9);
+        
+        $menu = Menu::find($menu_id);
+        
+        $shop = Shop::find($menu->shop_id); 
+        
+        $menus = Menu::where('shop_id', $shop->id)->get();
+
+        return view('content.content-category-shop', compact('products', 'menu_id', 'menus', 'shop'));
+    }
+
+    
+
+    public function categoryProductAuth($menu_id){
+
+        $products = Product::where('menu_id', $menu_id)->paginate(9);
+        
+        $menu = Menu::find($menu_id);
+        
 
         return view('content.content-myshop-category-product', compact('products', 'menu_id'));
+    }
+
+    public function show($shop_id){
+
+        $products = Product::whereIn('menu_id', Menu::where('shop_id', $shop_id)->get('id'))->paginate(9);      
+        $shop = Shop::find($shop_id);
+        $menus = Menu::where('shop_id', $shop_id)->get();
+
+        return view('content.content-shop-details', compact('products', 'shop', 'menus'));
     }
 
     public function create(){

@@ -73,15 +73,8 @@
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a href="/">Home</a></li>
-                            @if (Auth::user())
-                                @if(Auth::user()->shop)
-                                    <li><a href="{{route('menus.index', ['id' => Auth::user() ? Auth::user()->id : null])}}">Shop</a></li>   
-                                @else
-                                    <li><a href="{{route('shops.create')}}">Shop</a></li>
-                                @endif
-                            @else 
-                                <li><a href="{{route('login')}}">Shop</a></li>
-                            @endif
+
+                            <li><a href="{{route('listShop')}}">Shop</a></li>
 
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
@@ -89,10 +82,21 @@
                                     <li><a href="carts/cart">Shoping Cart</a></li>
                                     <li><a href="./checkout.html">Check Out</a></li>
                                     <li><a href="./blog-details.html">Blog Details</a></li>
+                                    <li><a href="./contact.html">Contact</a></li>
                                 </ul>
                             </li>
                             <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+
+                            @if (Auth::user())
+                                @if(Auth::user()->shop)
+                                    <li><a href="{{route('menus.index', ['id' => Auth::user() ? Auth::user()->id : null])}}">My Shop</a></li>   
+                                @else
+                                    <li><a href="{{route('shops.create')}}">My Shop</a></li>
+                                @endif
+                            @else 
+                                <li><a href="{{route('login')}}">My Shop</a></li>
+                            @endif
+
                         </ul>
                     </nav>
                 </div>

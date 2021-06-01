@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>My Shop</h2>
+                        <h2>{{$shop->shop_name}}</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
                             <span>Shop</span>
@@ -26,7 +26,17 @@
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
 
-                        @include('categories.category-menu')
+                        <div class="sidebar__item">
+                            <h4>Menu</h4>
+                            @if ($menus)
+                                <ul>
+                                    @foreach ($menus as $menu)
+                                        <li><a href="{{route('showProductOfCategory', ['id' => $menu->id])}}">{{$menu->type}}</a></li>
+                                    @endforeach
+                                    
+                                </ul>
+                            @endif                     
+                        </div>
 
                         <div class="sidebar__item">
                             <h4>Price</h4>
@@ -64,7 +74,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
-                                    <h6><span>16</span> Products found</h6>
+                                    <h6><a href="{{route('mapShop', ['id' => $shop->id])}}" class="btn btn-success">Map</a></h6>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-3">
@@ -76,32 +86,10 @@
                         </div>
                     </div>
                     <x-alert/>
-                    @if (Auth::user())
                         
-                        @if (!empty(Auth::user()->shop->id))
+
                             <div>                               
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-5">
-                                        <div class="filter__sort">
-                                            <h6><a href="{{route('menus.create')}}" class="btn btn-success">Tao MENU</a></h6>
-                                        </div>
-                                    </div>
-                                    @if (count(Auth::user()->shop->menu) > 0)
-                                        <div class="col-lg-4 col-md-4">
-                                            <div class="filter__found">
-                                                <h6><a href="{{route('products.create')}}" class="btn btn-warning">Them SP</a></h6>
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                    <div class="col-lg-4 col-md-3">
-                                        <div class="filter__option">
-                                            <h6><a href="{{route('mapShop', ['id' => Auth::user()->shop->id])}}" class="btn btn-success">Map</a></h6>
-                                        </div>
-                                    </div>
-                                </div> 
                                 <div class="product__discount">
-
                                 </div>
                                 <div class="row data_products" >
                                     @foreach ($products as $item)
@@ -129,21 +117,8 @@
                                             </div>
                                         </div>
                                     @endforeach
-
-                                </div>
-                        @else
-                            <div class="row" >
-                                <form action="{{route('shops.create', Auth::user()->id)}}">
-                                    @csrf
-                                    <input type="submit" style="color: red" value="Create Shop">
-                                </form>
                             </div>
-                        @endif
-                    @else
-                        <div>
-                            <a href="{{route('login')}}">Login</a>
-                        </div>
-                    @endif
+
 
 
                     <div class="product__pagination num_page">
@@ -325,7 +300,7 @@
                 async: false,
                 data:{
                     {{ $products->getPageName() }}: numberPage,
-                    shopID: {{Auth::user()->shop->id}}
+                    shopID: {{$shop->id}}
                 },
                 type: "POST",
                 success: function(result){
@@ -362,6 +337,7 @@
             }
 
             $('.data_products').html(elProduct);
+
             OutputPage(numberPage);
         }
 

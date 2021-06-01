@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MapController;
 use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -29,9 +30,7 @@ Route::get('/checkout', function () {
     return view('content.content-checkout');
 });
 
-Route::get('/map', function () {
-    return view('content.content-map');
-});
+Route::get('/map-shop/{id}', [MapController::class, 'show'])->name('mapShop');
 
 Route::get('/blog', function () {
     return view('content.content-blog');
@@ -85,10 +84,14 @@ Route::prefix('carts')->namespace('Carts')->name('carts.')->group(function(){
     Route::get('/delete', [CartController::class, 'destroyAll']);
 });
 
-Route::get('/my-shop/{id}', [ShopController::class, 'categoryProduct'])->name('showProductOfCategory');
+Route::get('/shop-customer/{id}', [ShopController::class, 'categoryProduct'])->name('showProductOfCategory');
+
+Route::get('/my-shop/{id}', [ShopController::class, 'categoryProductAuth'])->name('showProductOfCategoryAuth');
+
+Route::get('/shop', [ShopController::class, 'index'])->name('listShop');
 
 
 
-
+Route::get('/shop/{id}', [ShopController::class, 'show'])->name('shopDetails');
 
 
