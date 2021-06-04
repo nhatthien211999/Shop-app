@@ -94,4 +94,7 @@ Route::get('/shop', [ShopController::class, 'index'])->name('listShop');
 
 Route::get('/shop/{id}', [ShopController::class, 'show'])->name('shopDetails');
 
+//Admin router
+Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function(){ 
 
+});
