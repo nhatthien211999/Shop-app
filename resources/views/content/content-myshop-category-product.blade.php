@@ -45,6 +45,14 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="sidebar__item">
+                            <h4>Thống kê</h4>
+                            <ul>
+                                <li><a href="#">Đơn hàng trong ngày</a></li>
+                                <li><a href="#">Đơn hàng trong Tháng</a></li>             
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-7">
@@ -119,8 +127,8 @@
 
                                                     <div class="product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
                                                         <ul class="product__item__pic__hover">
-                                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                                            <li><a href="{{route('products.edit', ['id' => $item->id])}}"><i class="fa fa-edit"></i></a></li>
+                                                            <li><a href="{{route('products.destroy', ['id' => $item->id])}}"><i class="fa fa-trash"></i></a></li>
                                                             <li><a href="#" class="add-to-cart" data-id="{{$item->id}}"  ><i class="fa fa-shopping-cart" ></i></a></li>
                                                         </ul>
                                                     </div>
@@ -281,6 +289,9 @@
         var lastPage={{$products->lastPage()}};
         var x=OutputPage(0);
         // var listPage=
+
+        setTimeout(() => document.getElementById('alert-display').style.display = 'none', 5000);
+
         function OutputPage(numberPage){
             if(numberPage==0)
             {
@@ -342,6 +353,10 @@
             var QtyItem=listProducts.length;
             var elProduct=[];
             for(var i=0; i< QtyItem; i++){
+
+                let url = "{{ url('products/delete')}}" + "/" +listProducts[i].id;
+                let url_edit = "{{ url('products/edit')}}" + "/" +listProducts[i].id;
+
                 elProduct.push('<div class="col-lg-4 col-md-6 col-sm-6">\
                                     <div class="product__item">\
                                         <form>\
@@ -352,8 +367,8 @@
                                             <input type="hidden" value="' + listProducts[i].image +'" class="cart_product_image_' + listProducts[i].id + '">\
                                             <div class="product__item__pic set-bg" data-setbg="">\
                                                 <ul class="product__item__pic__hover">\
-                                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>\
-                                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>\
+                                                    <li><a href="' + url_edit + '"><i class="fa fa-edit"></i></a></li>\
+                                                    <li><a href="'+ url +'"><i class="fa fa-trash"></i></a></li>\
                                                     <li><a  href="#" class="add-to-cart" data-id="' + listProducts[i].id+ '"><i class="fa fa-shopping-cart"></i></a></li>\
                                                 </ul>\
                                             </div>\

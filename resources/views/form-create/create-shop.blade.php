@@ -6,7 +6,6 @@
       <h6 class="m-0 font-weight-bold text-primary">Them SP</h6>
     </div>
     <div class="card-body">
-      <x-alert/>
       <div class="table-responsive">
         <form method="POST" action="{{route('shops.store', Auth::user()->id)}}" enctype="multipart/form-data" id="creatshop">         
             @csrf
@@ -18,7 +17,9 @@
             <input type="text" class="form-control" name="address">
             <br>
             <label for="image">Backgound:</label>
-            <input type="file" class="form-control" name="image">
+            <br>
+            <img id="output" width="150px"/>
+            <input type="file" class="form-control" name="image" onchange="loadFile(event)">
             <br>
             <label for="map">Vi Tri Shop:</label>
             <a href="#" class="vt">
@@ -72,5 +73,16 @@
                       .attr("value", position.coords.longitude)
                       .appendTo("#creatshop");        
     }
+
+    var loadFile = function(event) {
+            var reader = new FileReader();
+
+            reader.onload = function(){
+            var output = document.getElementById('output');
+                output.src = reader.result;
+            };
+
+            reader.readAsDataURL(event.target.files[0]);
+        };
   </script>
 @endsection

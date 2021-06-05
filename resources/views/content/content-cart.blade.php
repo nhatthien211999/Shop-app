@@ -79,7 +79,7 @@
                                 <a href="/" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
                                 @if (session('cart') !== null)
                                     <input type="submit" class="primary-btn cart-btn cart-btn-right" value="Upadate Cart" style="background-color: #A9F5A9">
-                                    <a href="/delete" class="primary-btn cart-btn cart-btn-right" style="margin-right: 10px; background-color: #FE2E64">
+                                    <a href="{{route('carts.deleteAll')}}" class="primary-btn cart-btn cart-btn-right" style="margin-right: 10px; background-color: #FE2E64">
                                     <span class="icon_close"></span>
                                     Xóa tất cả</a>  
                                 @endif

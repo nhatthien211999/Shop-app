@@ -45,6 +45,14 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="sidebar__item">
+                            <h4>Thống kê</h4>
+                            <ul>
+                                <li><a href="#">Đơn hàng trong ngày</a></li>
+                                <li><a href="#">Đơn hàng trong Tháng</a></li>             
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-7">
@@ -75,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    <x-alert/>
+                    <x-alert id="alert"/>
                     @if (Auth::user())
                         
                         @if (!empty(Auth::user()->shop->id))
@@ -107,16 +115,18 @@
                                     @foreach ($products as $item)
                                         <div class="col-lg-4 col-md-6 col-sm-6">
                                             <div class="product__item" >
-                                            @csrf
+                                            <form>
+                                                @csrf
                                                 <input type="hidden" value="{{$item->id}}" class="cart_product_id_{{$item->id}}">
                                                 <input type="hidden" value="{{$item->price}}" class="cart_product_price_{{$item->id}}">
                                                 <input type="hidden" value="{{$item->name}}" class="cart_product_name_{{$item->id}}">
                                                 <input type="hidden" value="{{$item->image}}" class="cart_product_image_{{$item->id}}">
 
-                                                <div class="product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
+                                                <div class="product__discount__item__pic product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
+                                                    <div class="product__discount__percent">-20%</div>
                                                     <ul class="product__item__pic__hover">
-                                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                                        <li><a href="{{route('products.edit', ['id' => $item->id])}}"><i class="fa fa-edit"></i></a></li>
+                                                        <li><a href="{{route('products.destroy', ['id' => $item->id])}}"><i class="fa fa-trash"></i></a></li>
                                                         <li><a href="#" class="add-to-cart" data-id="{{$item->id}}"  ><i class="fa fa-shopping-cart" ></i></a></li>
                                                     </ul>
                                                 </div>
@@ -125,7 +135,7 @@
                                                     <h6><a href="/products/{{$item->id}}">{{$item->name}}</a></h6>
                                                     <h5>{{$item->price}}</h5>
                                                 </div>
-                                        
+                                            </form> 
                                             </div>
                                         </div>
                                     @endforeach
@@ -273,6 +283,9 @@
 @endsection
 @section('js')
     <script>
+
+        setTimeout(() => document.getElementById('alert-display').style.display = 'none', 5000);
+        
         var lastPage={{$products->lastPage()}};
         var x=OutputPage(0);
         // var listPage=
@@ -337,6 +350,10 @@
             var QtyItem=listProducts.length;
             var elProduct=[];
             for(var i=0; i< QtyItem; i++){
+                let url = "{{ url('products/delete')}}" + "/" +listProducts[i].id;
+
+                let url_edit = "{{ url('products/edit')}}" + "/" +listProducts[i].id;
+
                 elProduct.push('<div class="col-lg-4 col-md-6 col-sm-6">\
                                     <div class="product__item">\
                                         <form>\
@@ -347,8 +364,8 @@
                                             <input type="hidden" value="' + listProducts[i].image +'" class="cart_product_image_' + listProducts[i].id + '">\
                                             <div class="product__item__pic set-bg" data-setbg="">\
                                                 <ul class="product__item__pic__hover">\
-                                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>\
-                                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>\
+                                                    <li><a href="' + url_edit + '"><i class="fa fa-edit"></i></a></li>\
+                                                    <li><a href="' + url + '"><i class="fa fa-trash"></i></a></li>\
                                                     <li><a  href="#" class="add-to-cart" data-id="' + listProducts[i].id+ '"><i class="fa fa-shopping-cart"></i></a></li>\
                                                 </ul>\
                                             </div>\

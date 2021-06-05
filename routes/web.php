@@ -63,6 +63,7 @@ Route::prefix('menus')->namespace('Menus')->name('menus.')->group(function(){
 });
 
 Route::prefix('products')->namespace('Products')->name('products.')->group(function(){
+
     Route::get('/',[ProductController::class, 'index'])->name('home');
 
     Route::get('/categories/{id}',[ProductController::class, 'listProducts'])->name('category');
@@ -71,7 +72,14 @@ Route::prefix('products')->namespace('Products')->name('products.')->group(funct
 
     Route::post('/store',[ProductController::class, 'store'])->name('store');
 
+    Route::get('delete/{id}', [ProductController::class, 'destroy'])->name('destroy');
+
+    Route::get('edit/{id}', [ProductController::class, 'edit'])->name('edit');
+
+    Route::post('/update/{id}',[ProductController::class, 'update'])->name('update');
+
     Route::get('/{id}', [ProductController::class, 'show'])->name('show');
+
 });
 
 Route::prefix('carts')->namespace('Carts')->name('carts.')->group(function(){
@@ -81,7 +89,7 @@ Route::prefix('carts')->namespace('Carts')->name('carts.')->group(function(){
     Route::post('/add-to-cart', [CartController::class, 'addCart']);
     Route::get('/update-cart', [CartController::class, 'update']);
     Route::get('/delete/{session_id}', [CartController::class, 'destroy']);
-    Route::get('/delete', [CartController::class, 'destroyAll']);
+    Route::get('/delete', [CartController::class, 'destroyAll'])->name('deleteAll');
 });
 
 Route::get('/shop-customer/{id}', [ShopController::class, 'categoryProduct'])->name('showProductOfCategory');

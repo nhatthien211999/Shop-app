@@ -278,7 +278,8 @@
                                     <input type="hidden" value="{{$item->name}}" class="cart_product_name_{{$item->id}}">
                                     <input type="hidden" value="{{$item->image}}" class="cart_product_image_{{$item->id}}">
 
-                                    <div class="product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
+                                    <div class="product__discount__item__pic product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
+                                        <div class="product__discount__percent">-20%</div>
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
