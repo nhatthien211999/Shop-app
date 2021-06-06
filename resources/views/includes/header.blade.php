@@ -103,7 +103,20 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                            <li><a href="{{ route('favourites.view') }}"><i class="fa fa-heart"></i>
+                                <span id="total_favourite">
+                                    <?php
+                                        $total = 0;
+                                        $favourite = session()->get('favourite');
+                                        if($favourite){
+                                            foreach($favourite as $key => $val){
+                                                $total += $val['product_quantity'];
+                                            }
+                                        }
+                                        echo $total;
+                                    ?>
+                                </span>
+                            </a></li>
                             <li><a href="{{route('carts.view')}}">
                                 <i class="fa fa-shopping-bag"></i>
                                 <span id="total">

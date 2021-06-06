@@ -103,7 +103,7 @@
 
                                                     <div class="product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
                                                         <ul class="product__item__pic__hover">
-                                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                            <li><a href="#" class="add-to-favourite" data-id="{{$item->id}}"><i class="fa fa-heart"></i></a></li>
                                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                                             <li><a href="#" class="add-to-cart" data-id="{{$item->id}}"  ><i class="fa fa-shopping-cart" ></i></a></li>
                                                         </ul>
@@ -323,7 +323,7 @@
                                             <input type="hidden" value="' + listProducts[i].image +'" class="cart_product_image_' + listProducts[i].id + '">\
                                             <div class="product__item__pic set-bg" data-setbg="">\
                                                 <ul class="product__item__pic__hover">\
-                                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>\
+                                                    <li><a href="#" class="add-to-favourite" data-id="' + listProducts[i].id + '"><i class="fa fa-heart"></i></a></li>\
                                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>\
                                                     <li><a  href="#" class="add-to-cart" data-id="' + listProducts[i].id+ '"><i class="fa fa-shopping-cart"></i></a></li>\
                                                 </ul>\

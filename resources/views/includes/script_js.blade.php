@@ -64,11 +64,62 @@
                 console.log(request.responseText);
             }
 
-        })  
+        });  
 
 
 
 
+    });
+
+    $('body').on('click', '.add-to-favourite', function() {
+        console.log('a1');
+        var id = $(this).data('id');
+        
+        var favourite_product_id = $('.cart_product_id_' + id).val();
+        var favourite_product_name = $('.cart_product_name_' + id).val();
+        var favourite_product_image = $('.cart_product_image_' + id).val();
+        var favourite_product_price = $('.cart_product_price_' + id).val();
+        var favourite_product_quantity = $('.cart_product_quantity_' + id).val();
+        
+
+
+        if( !favourite_product_quantity ){
+            favourite_product_quantity = 1
+        }
+
+        var _token = $('input[name="_token"]').val();
+        var data = {'favourite_product_id': favourite_product_id,
+                    'favourite_product_name': favourite_product_name,
+                    'favourite_product_image': favourite_product_image,
+                    'favourite_product_price': favourite_product_price,
+                    'favourite_product_quantity': favourite_product_quantity,
+                    '_token': _token};
+        console.log(data);
+        $.ajax({
+            url: "{{ url('favourites/add-to-favourite') }}",
+            method: 'POST',
+            data: data,
+            success: function(data){
+                $("#total_favourite").html(data['total']);
+
+                swal({
+                    title: "Thêm vào danh muc yeu thich thành công",
+                    text: "Bạn có thể tiếp tục mua sắm hoặc đến danh muc",
+                    type: "success",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Favourite",
+                    closeOnConfirm: false,
+                },
+                function(){
+                    window.location.href = "{{ url('favourites/favourite')}} "
+                });
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+
+        });  
     });
 
 });

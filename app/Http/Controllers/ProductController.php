@@ -35,6 +35,7 @@ class ProductController extends Controller
             if($request->file('image')){
 
                 $filename = $request->file('image')->getClientOriginalName();
+                $request->image->storeAs('images',$filename,'public');   
                 $product = Product::where('id', $id)->update([
                     'name' => $request['name'],
                     'price' => $request['price'],

@@ -8,7 +8,7 @@
     <div class="card-body">
       <x-alert/>
       <div class="table-responsive">
-        <form method="POST" action="{{route('products.update', $product->id )}}" enctype="multipart/form-data">         
+        <form method="POST" action="{{route('products.update', $product->id )}}" enctype="multipart/form-data" >          
             @csrf
           <div class="form-group">
             <label for="name"> Ten SP:</label>
@@ -19,8 +19,9 @@
             <br>
             <label for="description"> Description:</label>
             <input type="text" class="form-control" name="description" value="{{ $product->description }}">
-            <label for="sale"> Sale:</label>
-            <input type="text" class="form-control" name="sale" value="{{ $product->sale }}">
+            <br>
+            <label for="sale"> Sale (%):</label>
+            <input type="number" class="form-control" name="sale" value="{{ $product->sale }}">
             <br>
             <label for="image"> Image:</label>
             <br>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\MenuController;
@@ -101,6 +102,22 @@ Route::get('/shop', [ShopController::class, 'index'])->name('listShop');
 
 
 Route::get('/shop/{id}', [ShopController::class, 'show'])->name('shopDetails');
+
+Route::prefix('favourites')->namespace('Favourites')->name('favourites.')->group(function(){
+    Route::get('/favourite', function () {
+        return view('content.content-favourite');
+    })->name('view');
+
+    Route::post('/add-to-favourite', [FavouriteController::class, 'addFavourite']);
+
+    Route::get('/delete', [FavouriteController::class, 'destroyAll'])->name('deleteAll');
+
+    Route::get('/delete/{session_id}', [FavouriteController::class, 'destroy']);
+
+    Route::get('/cart/{session_id}', [FavouriteController::class, 'cartUpdate']);
+
+    
+});
 
 //Admin router
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function(){ 
