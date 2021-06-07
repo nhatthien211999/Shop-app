@@ -3,7 +3,7 @@
     @if ($menus)
         <ul>
             @foreach ($menus as $menu)
-                <li><a href="{{route('showProductOfCategoryAuth', ['id' => $menu->id])}}">{{$menu->type}}</a></li>
+                <li><a href="{{route('shops.showProductOfCategoryAuth', ['id' => $menu->id])}}">{{$menu->type}}</a></li>
             @endforeach
             
         </ul>

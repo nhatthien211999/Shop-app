@@ -52,6 +52,12 @@ Route::prefix('shops')->namespace('Shops')->name('shops.')->group(function(){
     Route::get('/create',[ShopController::class, 'create'])->name('create');
 
     Route::post('/store/{id}',[ShopController::class, 'store'])->name('store');
+
+    Route::get('/shop-customer/{id}', [ShopController::class, 'categoryProduct'])->name('showProductOfCategory');
+
+    Route::get('/my-shop/{id}', [ShopController::class, 'categoryProductAuth'])->name('showProductOfCategoryAuth');
+
+    Route::get('/shop', [ShopController::class, 'index'])->name('listShop');
 });
 
 Route::prefix('menus')->namespace('Menus')->name('menus.')->group(function(){
@@ -93,11 +99,7 @@ Route::prefix('carts')->namespace('Carts')->name('carts.')->group(function(){
     Route::get('/delete', [CartController::class, 'destroyAll'])->name('deleteAll');
 });
 
-Route::get('/shop-customer/{id}', [ShopController::class, 'categoryProduct'])->name('showProductOfCategory');
 
-Route::get('/my-shop/{id}', [ShopController::class, 'categoryProductAuth'])->name('showProductOfCategoryAuth');
-
-Route::get('/shop', [ShopController::class, 'index'])->name('listShop');
 
 
 
