@@ -337,25 +337,25 @@
             {
 
                 var userID =$("#user").attr("title");
-                PrintCmt(this,content,index);
-                // $.ajax({
-                //     url: "/api/createCmt",
-                //     method: 'POST',
-                //     data: {
-                //         productID: productID,//nội dung, userID
-                //         content: content,
-                //         parent: parentID,//id comment cha
-                //         userID: userID,
 
-                //     },
-                //     async: false,
-                //     success: function(data){
-                //         console.log(data.res);
-                //         if(data.res==true){
+                $.ajax({
+                    url: "/api/createCmt",
+                    method: 'POST',
+                    data: {
+                        productID: productID,//nội dung, userID
+                        content: content,
+                        parent: parentID,//id comment cha
+                        userID: userID,
 
-                //         }
-                //     }
-                // })
+                    },
+                    async: false,
+                    success: function(data){
+                        console.log(data.res);
+                        if(data.res==true){
+                            PrintCmt(this,content,index);
+                        }
+                    }
+                })
             }
             if($('#login').text()!="")
             {
