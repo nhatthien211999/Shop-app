@@ -157,7 +157,7 @@
                                     <div class="cmt"  style="padding-bottom: 30px;">
                                         <img src="/assets/img/anonymous.png" class="rounded-circle" alt="Cinque Terre" width="40px" height="40px"style="position: absolute;">
                                         <div class="write-cmt" style="left: 50px;position: relative;">
-                                            <input hidden type="text" id="productID" class="product-class" value="{{$product->id}}">
+                                            <input hidden type="text" id="productID" class="product-class" value="{{$product->id}}"> {{-- id product--}}
                                             <input type="text" id="cmt" class="cmt-class" style="width:100%; outline:none;border: none; border-bottom: 1px solid grey;"/>
                                             <input hidden type="text" id="parentID" class="parent-class" value="0">
                                             <button class="btn btn-secondary post-cmt" style="margin:5px;">Post</button>
@@ -294,8 +294,7 @@
 @section('js')
 <script>
     $(document).ready(function(){
-
-        $('.respone').click(function(){
+        $('body').on('click', '.respone', function() {
         var commentator = $(this).parentsUntil('div.user-cmt').find('.commentator-class').val();
         console.log(commentator );
         // console.log($(this).next().is('.rep-cmt'));
@@ -327,6 +326,10 @@
         // console.log(productID+" "+content );
         //  console.log($('.account').is(".login"));
         //  console.log($('.account').is(".user"));
+        if($('#login').text()!="")
+        {
+            alert("bạn cần đăng nhập trc khi gửi");
+        }
         if(content=="")
         {
             alert("bạn cần ghi vào trc khi gửi");
@@ -336,7 +339,8 @@
             if($('#userlogin').text()!="")
             {
 
-                var userID =$("#user").attr("title");
+                var userID =$("#userlogin").attr("title");
+                console.log(userID);
 
                 $.ajax({
                     url: "/api/createCmt",
@@ -354,13 +358,12 @@
                         if(data.res==true){
                             PrintCmt(this,content,index);
                         }
-                    }
+                    },error: function (request, status, error) {
+                console.log(request.responseText);
+                }
                 })
             }
-            if($('#login').text()!="")
-            {
-                alert("bạn cần đăng nhập trc khi gửi");
-            }
+
         }
     });
 
@@ -414,6 +417,7 @@
                 </div>\
             </div>';
             repCmt.append(text);
+
 
             console.log("else");
 
