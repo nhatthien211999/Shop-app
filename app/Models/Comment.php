@@ -18,6 +18,6 @@ class Comment extends Model
         return $this->belongsToMany(Product::class);
     }
     public function user(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }

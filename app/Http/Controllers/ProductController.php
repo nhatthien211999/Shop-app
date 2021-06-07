@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Comment;
 
 class ProductController extends Controller
 {
@@ -18,7 +19,46 @@ class ProductController extends Controller
 
     public function show($id){
         $product = Product::find($id);
-        return view('content.content-details', compact('product'));
+
+        $cmts=Comment::where('product_id',$id)->where('comment_id',0)->paginate(10);
+        $repCmt=Comment::where('product_id',$id)->where('comment_id',"",0)->paginate(10);
+
+
+
+
+        $repCmt=[];
+        foreach($cmts as $key=>$value){
+
+            $takeRepCmt=Comment::where('product_id',$id)->where('comment_id',$value->id)->paginate(4);
+            array_push($repCmt,$takeRepCmt);
+            // $repCmt = array("$value->id" => $takeRepCmt);
+        }
+
+
+        // dd($repCmt);
+        // var_dump($repCmt);
+        // var_dump("<\br>");
+        // foreach($repCmt as $value)
+        // {
+        //     foreach($value as $k)
+        //     {
+        //         var_dump($k->id);
+        //         break;
+        //     }
+
+        // }
+
+        //     $gg=count($repCmt[0]);
+        //     // dd($gg);
+        // for($i=0;$i<$gg;$i++){
+        //     var_dump($repCmt[0][$i]->id);
+        // }
+
+        // dd($repCmt);
+
+
+
+        return view('content.content-details', compact('product','cmts','repCmt'));
     }
 
 
@@ -41,9 +81,9 @@ class ProductController extends Controller
 
             $filename = $request->file('image')->getClientOriginalName();
 
-            $request->image->storeAs('images',$filename,'public');   
+            $request->image->storeAs('images',$filename,'public');
 
-            $product = Product::create([                    
+            $product = Product::create([
                 'name' => $request->input('name'),
                 'price' => $request->input('price'),
                 'status' => 'active',
@@ -54,7 +94,7 @@ class ProductController extends Controller
         }
         else
         {
-            $product = Product::create([                    
+            $product = Product::create([
                 'name' => $request->input('name'),
                 'price' => $request->input('price'),
                 'status' => 'active',
@@ -77,10 +117,10 @@ class ProductController extends Controller
             $filename = $request->file('image')->getClientOriginalName();
 
             $request->image->storeAs('images',$filename,'public');
-            $profile->update(['image'=>$filename]);           
+            $profile->update(['image'=>$filename]);
         }
 
-        
+
     }
 
 

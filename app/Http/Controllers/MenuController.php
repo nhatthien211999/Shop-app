@@ -16,19 +16,21 @@ class MenuController extends Controller
         $this->middleware('auth')->only('index');
     }
 
-    function index($id = null){
-        $products = [];
-        if($id != null){
+    function index($id){
+        // $products = [];
+        // if($id != null){
             $shop = Auth::user()->shop;
-            
-            if($shop){
+            // dd($shop);
+            // if($shop){
                 $menus = Menu::where('shop_id', $shop->id)->get('id');
-                $products = Product::whereIn('menu_id', $menus)->paginate(9);  
-            }
-            return view('content.content-myshop', compact('products'));  
-              
-        }
-        return view('content.content-myshop', compact('products'));
+                $products = Product::whereIn('menu_id', $menus)->paginate(9);
+                // dd($shop);
+
+            //}
+            return view('content.content-myshop', compact('products'));
+
+        // }
+        //return view('content.content-myshop', compact('products'));
     }
 
     function create()

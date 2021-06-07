@@ -151,20 +151,61 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                <div class="product__details__tab__desc">
-                                    <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                        Proin eget tortor risus.</p>
+
+                                <div class="product__details__tab__desc all-comment">
+
+                                    <div class="cmt"  style="padding-bottom: 30px;">
+                                        <img src="/assets/img/anonymous.png" class="rounded-circle" alt="Cinque Terre" width="40px" height="40px"style="position: absolute;">
+                                        <div class="write-cmt" style="left: 50px;position: relative;">
+                                            <input hidden type="text" id="productID" class="product-class" value="{{$product->id}}">
+                                            <input type="text" id="cmt" class="cmt-class" style="width:100%; outline:none;border: none; border-bottom: 1px solid grey;"/>
+                                            <input hidden type="text" id="parentID" class="parent-class" value="0">
+                                            <button class="btn btn-secondary post-cmt" style="margin:5px;">Post</button>
+                                            <button  style="border-style:none;background:none;margin:5px;" >Cancel</button>
+                                        </div>
+                                    </div>
+
+                                    @foreach ($cmts as $key=>$value)
+                                        <div class="read-cmt"style="padding-bottom: 15px;">
+                                            <div class="user-cmt">
+                                                <img src="/assets/img/anonymous.png" class="rounded-circle" alt="Cinque Terre" width="40px" height="40px"style="position: absolute;">
+                                                <div class="list-respone" style="left: 50px;position: relative;">
+                                                    <p style="margin-bottom:unset; font-weight:bold;" >{{$value->user->name}}</p>
+
+                                                    <span>{{$value->comment}}</span>
+                                                    <div class="emoji-like" style="padding-top: 5px;">
+                                                        <i class="fa fa-thumbs-up">1000</i>
+                                                        <i class="fa fa-thumbs-down">10</i>
+                                                        <button  class="respone"  style="border-style:none;background:none;">Phản Hồi</button>
+
+                                                    </div>
+                                                    <input type="text" class="commentator-class" id="userID" value="{{$value->user->id}}" hidden />
+
+                                                    <?php
+                                                        $length= count($repCmt[$key]);
+                                                    ?>
+
+                                                    @for ($i=0; $i<$length; $i++)
+                                                        <div class="user-rep-cmt">
+                                                            <img src="/assets/img/anonymous.png" class="rounded-circle" alt="Cinque Terre" width="40px" height="40px"style="position: absolute;">
+                                                            <div  style="left: 50px;position: relative;">
+                                                                <p style="margin-bottom:unset; font-weight:bold;">{{$repCmt[$key][$i]->user->name}}</p>
+                                                                <span>{{$repCmt[$key][$i]->comment}}</span>
+                                                                <div class="emoji-like">
+                                                                    <i class="fa fa-thumbs-up">1000</i>
+                                                                    <i class="fa fa-thumbs-down">10</i>
+                                                                    <button  class="respone" style="border-style:none;background:none;" >Phản hồi</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -250,3 +291,150 @@
         </div>
     </section>
 @endsection
+@section('js')
+<script>
+    $(document).ready(function(){
+
+        $('.respone').click(function(){
+        var commentator = $(this).parentsUntil('div.user-cmt').find('.commentator-class').val();
+        console.log(commentator );
+        // console.log($(this).next().is('.rep-cmt'));
+        if($(this).next().is('.cmt')==false)// kiểm tra có lớp rep-cmt chưa sửa đổi đường link hình là user đang đăng nhập.prevUntil('.commentator-class')
+            $(this).parent().append(' <div class="cmt"  >\
+                <img src="/assets/img/anonymous.png" class="rounded-circle" alt="Cinque Terre" width="40px" height="40px"style="position: absolute;">\
+                <div class="write-cmt" style="left: 50px;position: relative;">\
+                    <input type="text" id="cmtContent" class="cmt-class" style="width:100%; outline:none;border: none; border-bottom: 1px solid grey;"/>\
+                    <input hidden type="text" id="productID" class="product-class" value="{{$product->id}}">\
+                    {{-- <input type="text" id="cmt" style="width:100%; outline:none;border: none; border-bottom: 1px solid grey;"/> --}}\
+                    <input hidden type="text" id="parentID" class="parent-class" value="'+commentator+'">\
+                    <button class="btn btn-secondary post-cmt" style="margin:5px;">Post</button>\
+                    <button  style="border-style:none;background:none;margin:5px;" >Cancel</button>\
+                </div>\
+            </div>');
+        // else{console.log("emoji-like !=null");}
+    })
+
+    $('body').on('click', '.post-cmt', function() {
+
+        // var i=$('.post-cmt').index(this);
+        console.log("content");
+        var index=$('.post-cmt').index(this);
+        console.log(index+" aaaaaa");
+        //var productID=$(this).parent().find($(".cmt-class")).val();
+        var productID=$(this).parentsUntil('.cmt').find($(".product-class")).val();
+        var content =$(this).parentsUntil('.cmt').find($(".cmt-class")).val();
+        var parentID =$(this).parentsUntil('.cmt').find($(".parent-class")).val();
+        // console.log(productID+" "+content );
+        //  console.log($('.account').is(".login"));
+        //  console.log($('.account').is(".user"));
+        if(content=="")
+        {
+            alert("bạn cần ghi vào trc khi gửi");
+
+        }else{
+
+            if($('#userlogin').text()!="")
+            {
+
+                var userID =$("#user").attr("title");
+                PrintCmt(this,content,index);
+                // $.ajax({
+                //     url: "/api/createCmt",
+                //     method: 'POST',
+                //     data: {
+                //         productID: productID,//nội dung, userID
+                //         content: content,
+                //         parent: parentID,//id comment cha
+                //         userID: userID,
+
+                //     },
+                //     async: false,
+                //     success: function(data){
+                //         console.log(data.res);
+                //         if(data.res==true){
+
+                //         }
+                //     }
+                // })
+            }
+            if($('#login').text()!="")
+            {
+                alert("bạn cần đăng nhập trc khi gửi");
+            }
+        }
+    });
+
+
+    });
+
+
+    function PrintCmt(indexElCmt,content, index){
+
+        var name=$('#userlogin').text();
+        var userID=$('#userlogin').attr('title');
+        // var index =$(indexElCmt).index(indexElCmt);
+        // console.log(index);
+
+
+
+        if(index==0){
+            var text ='\
+            <div class="read-cmt"style="padding-bottom: 15px;">\
+                <div class="user-cmt">\
+                    <img src="/assets/img/anonymous.png" class="rounded-circle" alt="Cinque Terre" width="40px" height="40px"style="position: absolute;">\
+                        <div class="list-respone" style="left: 50px;position: relative;">\
+                        <p style="margin-bottom:unset; font-weight:bold;" >'+name+'</p>\
+                        <span>'+content+'</span>\
+                        <div class="emoji-like" style="padding-top: 5px;">\
+                            <i class="fa fa-thumbs-up">1000</i>\
+                            <i class="fa fa-thumbs-down">10</i>\
+                            <button  class="respone"  style="border-style:none;background:none;">Phản Hồi</button>\
+                        </div>\
+                        <input type="text" class="commentator-class" id="userID" value="'+userID+'" hidden />\
+                    </div>\
+                </div>\
+                </div>';
+            $('.all-comment').append(text);
+            console.log("if");
+        }else{
+            var repCmt = $(indexElCmt).parentsUntil('.list-respone').last();
+            console.log(repCmt);
+            // repCmt.append("<p>fffaaaa</p>")
+            var text ='\
+            <div class="user-rep-cmt">\
+                <img src="/assets/img/anonymous.png" class="rounded-circle" alt="Cinque Terre" width="40px" height="40px"style="position: absolute;">\
+                <div  style="left: 50px;position: relative;">\
+                <p style="margin-bottom:unset; font-weight:bold;">'+name+'</p>\
+                    <span>'+content+'</span>\
+                    <div class="emoji-like">\
+                        <i class="fa fa-thumbs-up">1000</i>\
+                        <i class="fa fa-thumbs-down">10</i>\
+                    <button  class="respone" style="border-style:none;background:none;" >Phản hồi</button>\
+                    </div>\
+                </div>\
+            </div>';
+            repCmt.append(text);
+
+            console.log("else");
+
+        }
+    }
+
+</script>
+
+
+@endsection
+
+
+
+
+
+{{--
+    <div class="see-cmt">
+        <p style="color:DodgerBlue;"><i class="fa fa-caret-down" style="color:DodgerBlue;"></i> xem thêm bình luận</p>
+    </div> --}}
+
+
+
+
+

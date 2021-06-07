@@ -27,7 +27,7 @@
                                     <li><a href="#">English</a></li>
                                 </ul>
                             </div>
-                            <div class="header__top__right__auth">
+                            <div class="header__top__right__auth account">
                                 {{-- @if()
                                 <a href="{{ route('login') }}"><i class="fa fa-user"></i> Login</a>
                                 <a href="{{ route('register') }}"><i class="fa fa-user"></i> register</a> --}}
@@ -35,15 +35,15 @@
                                 <!-- Authentication Links -->
                                 @guest
                                     @if (Route::has('login'))
-                                        <a  href="{{ route('login') }}">{{ __('Login') }}</a>
+                                        <a id="login" href="{{ route('login') }}">{{ __('Login') }}</a>
                                     @endif
 
                                     @if (Route::has('register'))
-                                        <a  href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        <a id="register" href="{{ route('register') }}">{{ __('Register') }}</a>
                                     @endif
                                 @else
-                                    <a  href="#"> {{ Auth::user()->name }}</a>
-                                    <a  href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    <a id="userlogin" title="{{ Auth::user()->id}}" href="#"> {{ Auth::user()->name }}</a>
+                                    <a id="logout" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -75,11 +75,11 @@
                             <li class="active"><a href="/">Home</a></li>
                             @if (Auth::user())
                                 @if(Auth::user()->shop)
-                                    <li><a href="{{route('menus.index', ['id' => Auth::user() ? Auth::user()->id : null])}}">Shop</a></li>   
+                                    <li><a href="{{route('menus.index', ['id' => Auth::user() ? Auth::user()->id : null])}}">Shop</a></li>
                                 @else
                                     <li><a href="{{route('shops.create')}}">Shop</a></li>
                                 @endif
-                            @else 
+                            @else
                                 <li><a href="{{route('login')}}">Shop</a></li>
                             @endif
 

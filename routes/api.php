@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ProductAPI;
 use App\Http\Controllers\API\HomeAPI;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\API\CommentAPI;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::POST('/my-shop', [ProductAPI::class, 'myShop']);
 Route::get('/bestSell', [HomeAPI::class, 'BestSell']);
 
 Route::POST('/my-shop-category-product', [ProductAPI::class, 'myShopProductCategory']);
+Route::POST('/createCmt',[CommentAPI::class, 'createComment']);
 
 
 
