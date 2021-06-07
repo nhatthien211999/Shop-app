@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>My Shop</h2>
+                        <h2>{{$shop->shop_name}}</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
                             <span>Shop</span>
@@ -26,7 +26,17 @@
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
 
-                        @include('categories.category-menu')
+                        <div class="sidebar__item">
+                            <h4>Menu</h4>
+                            @if ($menus)
+                                <ul>
+                                    @foreach ($menus as $menu)
+                                        <li><a href="{{route('showProductOfCategory', ['id' => $menu->id])}}">{{$menu->type}}</a></li>
+                                    @endforeach
+                                    
+                                </ul>
+                            @endif                     
+                        </div>
 
                         <div class="sidebar__item">
                             <h4>Price</h4>
@@ -44,14 +54,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="sidebar__item">
-                            <h4>Thống kê</h4>
-                            <ul>
-                                <li><a href="#">Đơn hàng trong ngày</a></li>
-                                <li><a href="#">Đơn hàng trong Tháng</a></li>             
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -72,7 +74,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
-                                    <h6><span>16</span> Products found</h6>
+                                    <h6><a href="{{route('mapShop', ['id' => $shop->id])}}" class="btn btn-success">Map</a></h6>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-3">
@@ -83,50 +85,26 @@
                             </div>
                         </div>
                     </div>
-                    <x-alert id="alert"/>
-                    @if (Auth::user())
+                    <x-alert/>
                         
-                        @if (!empty(Auth::user()->shop->id))
+
                             <div>                               
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-5">
-                                        <div class="filter__sort">
-                                            <h6><a href="{{route('menus.create')}}" class="btn btn-success">Tao MENU</a></h6>
-                                        </div>
-                                    </div>
-                                    @if (count(Auth::user()->shop->menu) > 0)
-                                        <div class="col-lg-4 col-md-4">
-                                            <div class="filter__found">
-                                                <h6><a href="{{route('products.create')}}" class="btn btn-warning">Them SP</a></h6>
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                    <div class="col-lg-4 col-md-3">
-                                        <div class="filter__option">
-                                            <h6><a href="{{route('mapShop', ['id' => Auth::user()->shop->id])}}" class="btn btn-success">Map</a></h6>
-                                        </div>
-                                    </div>
-                                </div> 
                                 <div class="product__discount">
-
                                 </div>
                                 <div class="row data_products" >
                                     @foreach ($products as $item)
                                         <div class="col-lg-4 col-md-6 col-sm-6">
                                             <div class="product__item" >
-                                            <form>
-                                                @csrf
+                                            @csrf
                                                 <input type="hidden" value="{{$item->id}}" class="cart_product_id_{{$item->id}}">
                                                 <input type="hidden" value="{{$item->price}}" class="cart_product_price_{{$item->id}}">
                                                 <input type="hidden" value="{{$item->name}}" class="cart_product_name_{{$item->id}}">
                                                 <input type="hidden" value="{{$item->image}}" class="cart_product_image_{{$item->id}}">
 
-                                                <div class="product__discount__item__pic product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
-                                                    <div class="product__discount__percent">-20%</div>
+                                                <div class="product__item__pic set-bg" data-setbg="{{asset ('assets/img/featured/feature-1.jpg') }}">
                                                     <ul class="product__item__pic__hover">
-                                                        <li><a href="{{route('products.edit', ['id' => $item->id])}}"><i class="fa fa-edit"></i></a></li>
-                                                        <li><a href="{{route('products.destroy', ['id' => $item->id])}}"><i class="fa fa-trash"></i></a></li>
+                                                        <li><a href="#" class="add-to-favourite" data-id="{{$item->id}}"><i class="fa fa-heart"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                                         <li><a href="#" class="add-to-cart" data-id="{{$item->id}}"  ><i class="fa fa-shopping-cart" ></i></a></li>
                                                     </ul>
                                                 </div>
@@ -135,25 +113,12 @@
                                                     <h6><a href="/products/{{$item->id}}">{{$item->name}}</a></h6>
                                                     <h5>{{$item->price}}</h5>
                                                 </div>
-                                            </form> 
+                                        
                                             </div>
                                         </div>
                                     @endforeach
-
-                                </div>
-                        @else
-                            <div class="row" >
-                                <form action="{{route('shops.create', Auth::user()->id)}}">
-                                    @csrf
-                                    <input type="submit" style="color: red" value="Create Shop">
-                                </form>
                             </div>
-                        @endif
-                    @else
-                        <div>
-                            <a href="{{route('login')}}">Login</a>
-                        </div>
-                    @endif
+
 
 
                     <div class="product__pagination num_page">
@@ -283,9 +248,6 @@
 @endsection
 @section('js')
     <script>
-
-        setTimeout(() => document.getElementById('alert-display').style.display = 'none', 5000);
-        
         var lastPage={{$products->lastPage()}};
         var x=OutputPage(0);
         // var listPage=
@@ -338,7 +300,7 @@
                 async: false,
                 data:{
                     {{ $products->getPageName() }}: numberPage,
-                    shopID: {{Auth::user()->shop->id}}
+                    shopID: {{$shop->id}}
                 },
                 type: "POST",
                 success: function(result){
@@ -350,10 +312,6 @@
             var QtyItem=listProducts.length;
             var elProduct=[];
             for(var i=0; i< QtyItem; i++){
-                let url = "{{ url('products/delete')}}" + "/" +listProducts[i].id;
-
-                let url_edit = "{{ url('products/edit')}}" + "/" +listProducts[i].id;
-
                 elProduct.push('<div class="col-lg-4 col-md-6 col-sm-6">\
                                     <div class="product__item">\
                                         <form>\
@@ -364,8 +322,8 @@
                                             <input type="hidden" value="' + listProducts[i].image +'" class="cart_product_image_' + listProducts[i].id + '">\
                                             <div class="product__item__pic set-bg" data-setbg="">\
                                                 <ul class="product__item__pic__hover">\
-                                                    <li><a href="' + url_edit + '"><i class="fa fa-edit"></i></a></li>\
-                                                    <li><a href="' + url + '"><i class="fa fa-trash"></i></a></li>\
+                                                    <li><a href="#" class="add-to-favourite" data-id="' + listProducts[i].id + '"><i class="fa fa-heart"></i></a></li>\
+                                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>\
                                                     <li><a  href="#" class="add-to-cart" data-id="' + listProducts[i].id+ '"><i class="fa fa-shopping-cart"></i></a></li>\
                                                 </ul>\
                                             </div>\
@@ -379,6 +337,7 @@
             }
 
             $('.data_products').html(elProduct);
+
             OutputPage(numberPage);
         }
 

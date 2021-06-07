@@ -32,3 +32,9 @@
     </div>
   </div>
 @endsection
+
+@section('js')
+    <script>
+      setTimeout(() => document.getElementById('alert-display').style.display = 'none', 5000);
+    </script>
+@endsection

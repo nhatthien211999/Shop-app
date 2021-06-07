@@ -49,8 +49,9 @@ class CartController extends Controller
                 'product_quantity' => $data['cart_product_quantity'],
                 '_token' => $data['_token']
             );
+            session()->put('cart', $cart);
         }
-        session()->put('cart', $cart);
+        
         session()->save();
 
         $total = 0;

@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\Shop;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductAPI extends Controller
 {
     public function index(){
-
 
         $products = Controller::AllProduct();
 
@@ -22,7 +23,7 @@ class ProductAPI extends Controller
     }
 
 
-    public function myShop(Request $request)
+    public function listShopProduct(Request $request)
     {
         // $shop = Auth::user()->shop;
         //Nhom all Menu
@@ -43,6 +44,13 @@ class ProductAPI extends Controller
 
     }
 
+    public function listShop(Request $request)
+    {
 
+        $shops = DB::table('shops')->paginate(8);
+
+        return response()->json(compact('shops'));
+
+    }
 
 }

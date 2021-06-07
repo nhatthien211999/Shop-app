@@ -62,6 +62,47 @@ class ProductController extends Controller
     }
 
 
+    public function edit($id){
+
+        $product = Product::find($id);
+        $menus = Auth::user()->shop->menu;
+        return view('form-edit.edit-product', compact('product', 'menus'));
+    }
+
+    public function update(Request $request ,$id){
+
+        if($id){
+            if($request->file('image')){
+
+                $filename = $request->file('image')->getClientOriginalName();
+                $request->image->storeAs('images',$filename,'public');   
+                $product = Product::where('id', $id)->update([
+                    'name' => $request['name'],
+                    'price' => $request['price'],
+                    'description' => $request['description'],
+                    'menu_id' => $request['menu_id'],
+                    'image' => $filename,
+                    'sale' => $request['sale']
+                ]);
+            }else{
+                $product = Product::where('id', $id)->update([
+                    'name' => $request['name'],
+                    'price' => $request['price'],
+                    'description' => $request['description'],
+                    'menu_id' => $request['menu_id'],
+                    'sale' => $request['sale']
+                ]);
+            }
+
+
+            if($product){
+                return redirect()->back()->with('message', 'Update SP thanh cong');
+            }
+            return redirect()->back()->with('message', 'Update SP that bai');
+        }
+
+    }
+
     public function listProducts($idCategory){
         $menuID = Menu::where('category_id',$idCategory)->get('id');
 
@@ -123,5 +164,17 @@ class ProductController extends Controller
 
     }
 
+
+
+    public function destroy($id){
+        $product = Product::where('id', $id)->delete();
+
+        if($product){
+            return redirect()->back()->with('message', 'Xoa SP thanh cong');
+        }
+        return redirect()->back()->with('message', 'xoa SP that bai');
+    }
+
+  
 
 }

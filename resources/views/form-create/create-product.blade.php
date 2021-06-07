@@ -21,11 +21,13 @@
             <input type="text" class="form-control" name="description" >
             <br>
             <label for="image"> Image:</label>
-            <input type="file" class="form-control" name="image">
+            <br>
+            <img id="output" width="150px"/>
+            <input type="file" class="form-control" name="image" onchange="loadFile(event)">
             <br>
             <label for="menu_id"> Menu:</label>
             <select name="menu_id" class="form-control">
-              <option value="fail"></option>
+              <option value="" selected disabled hidden>Choose here</option>
                 @foreach ($menus as $menu)
                     <option value={{$menu->id}}> {{$menu->type}}</option>
                 @endforeach
@@ -39,4 +41,22 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('js')
+    <script>
+      setTimeout(() => document.getElementById('alert-display').style.display = 'none', 5000);
+
+
+        var loadFile = function(event) {
+            var reader = new FileReader();
+
+            reader.onload = function(){
+            var output = document.getElementById('output');
+                output.src = reader.result;
+            };
+
+            reader.readAsDataURL(event.target.files[0]);
+        };
+    </script>
 @endsection
