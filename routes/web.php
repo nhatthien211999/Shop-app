@@ -7,8 +7,9 @@ use App\Http\Controllers\MapController;
 use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ShopController;
-
+use App\Models\Promotion;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,9 +28,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
-Route::get('/checkout', function () {
-    return view('content.content-checkout');
+Route::prefix('checkout')->namespace('Checkout')->name('checkout.')->group(function(){
+    Route::get('/', function () {
+        return view('content.content-checkout');
+    })->name('checkout');
 });
+
 
 Route::get('/map-shop/{id}', [MapController::class, 'show'])->name('mapShop');
 
@@ -91,7 +95,9 @@ Route::prefix('products')->namespace('Products')->name('products.')->group(funct
 
 Route::prefix('carts')->namespace('Carts')->name('carts.')->group(function(){
     Route::get('/cart', function () {
-        return view('content.content-cart');
+        $promotions = Promotion::all();
+
+        return view('content.content-cart', compact('promotions'));
     })->name('view');
     Route::post('/add-to-cart', [CartController::class, 'addCart']);
     Route::get('/update-cart', [CartController::class, 'update']);
@@ -121,7 +127,12 @@ Route::prefix('favourites')->namespace('Favourites')->name('favourites.')->group
     
 });
 
-//Admin router
+Route::prefix('promotions')->namespace('Promotions')->name('promotions.')->group(function(){
+    Route::post('/add-promotion', [PromotionController::class, 'addPromotion']);
+    Route::post('/check-promotion', [PromotionController::class, 'checkPromotion']);
+});
+
+//Admin route
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function(){ 
 
 });

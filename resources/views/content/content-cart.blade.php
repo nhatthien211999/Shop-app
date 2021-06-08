@@ -95,10 +95,16 @@
                     <div class="shoping__continue">
                         <div class="shoping__discount">
                             <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
+                            <div>
+                                <select id="promotion_id" class="form-control">
+                                    <option value="" selected disabled hidden>Choose coupon code here</option>
+                                      @foreach ($promotions as $promotion)
+                                          <option value={{$promotion->id}}> {{$promotion->description}}</option>
+                                      @endforeach
+                                  </select>
+                                  <br>
                                 <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -119,10 +125,24 @@
                                     echo $total;
                                 ?>
                             </span></li>
-                            <li>Discount <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>Total Quantity 
+                                <span id = "total-quantity">
+                                    <?php
+                                        $total = 0;
+                                        $cart = session()->get('cart');
+                                        if($cart){
+                                            foreach($cart as $key => $val){
+                                                $total += $val['product_quantity'];
+                                            }
+                                        }
+                                        echo $total;
+                                    ?>
+                                </span></li>
+                            <li>Discount <span id="discount">0</span></li>
+                            <li>Total <span id = "total-price">0</span></li>
+                            
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a href="#" id="btn-checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>
@@ -135,5 +155,53 @@
 @section('js')
     <script>
         setTimeout(() => document.getElementById('alert-display').style.display = 'none', 5000);
+        
+        $('body').on('click', '.site-btn', function(){
+            var promotion_id = $('#promotion_id').val();
+            console.log('promotion_id:' + promotion_id);
+
+            $.ajax({
+            url: "{{ url('promotions/add-promotion') }}",
+            method: 'POST',
+            data: { 
+                    'promotion_id': promotion_id,
+                    "_token": "{{ csrf_token() }}",
+                },
+            success: function(data){
+                $("#discount").html(data['discount']);
+                $("#total-price").html(data['totalPrice']);
+                $("#total-quantity").html(data['totalQuantity']);
+                console.log(data);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+
+        });  
+        
+        });
+
+        $('body').on('click', '#btn-checkout', function(){
+            var promotion_id = $('#promotion_id').val();
+
+            if(promotion_id == null){
+                $.ajax({
+                    url: "{{ url('promotions/check-promotion') }}",
+                    method: 'POST',
+                    data: { 
+                            "_token": "{{ csrf_token() }}",
+                        },
+                    success: function(data){
+                        window.location.href = '{{ url('/checkout') }}';
+                        console.log(data);
+                    },
+                    error: function (request, status, error) {
+                        console.log(request.responseText);
+                    }
+                })
+            }else{
+                window.location.href = '{{ url('/checkout') }}';
+            }
+        })
     </script>
 @endsection

@@ -95,7 +95,7 @@
                                     <li><a href="{{route('shops.create')}}">My Shop</a></li>
                                 @endif
                             @else 
-                                li><a href="{{route('login')}}">My Shop</a></li>
+                                <li><a href="{{route('login')}}">My Shop</a></li>
                             @endif
                         </ul>
                     </nav>

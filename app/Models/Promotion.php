@@ -10,7 +10,7 @@ class Promotion extends Model
     use HasFactory;
     protected $fillable = [
         'type',
-        'decription',
+        'description',
         'deadline',
         'price_discount',
         'shop_id',
