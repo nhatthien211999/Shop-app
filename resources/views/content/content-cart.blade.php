@@ -139,7 +139,20 @@
                                     ?>
                                 </span></li>
                             <li>Discount <span id="discount">0</span></li>
-                            <li>Total <span id = "total-price">0</span></li>
+                            <li>Total 
+                                <span id = "total-price">
+                                    <?php
+                                        $total = 0;
+                                        $cart = session()->get('cart');
+                                        if($cart){
+                                            foreach($cart as $key => $val){
+                                                $total += $val['product_price'] * $val['product_quantity'];
+                                            }
+                                        }
+                                        echo $total;
+                                    ?>
+                                </span>
+                            </li>
                             
                         </ul>
                         <a href="#" id="btn-checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
